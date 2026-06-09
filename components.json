@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "radix-nova",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "libs/ui/src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@pikzee/ui/components",
+    "utils": "@pikzee/ui/lib/utils",
+    "ui": "@pikzee/ui/components",
+    "lib": "@pikzee/ui/lib",
+    "hooks": "@pikzee/ui/hooks"
+  },
+  "iconLibrary": "lucide"
+}

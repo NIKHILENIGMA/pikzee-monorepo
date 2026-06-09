@@ -1,0 +1,12 @@
+packages:
+  - 'apps/*'
+  - 'libs/*'
+allowBuilds:
+  '@nestjs/core': false
+  '@parcel/watcher': false
+  '@swc/core': false
+  less: false
+  msw: true
+  nx: false
+  sharp: false
+  unrs-resolver: false

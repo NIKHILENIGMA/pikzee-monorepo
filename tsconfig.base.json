@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "ignoreDeprecations": "5.0",
+    "paths": {
+      "@pikzee/ui": ["./libs/ui/src/index.ts"],
+
+      "@pikzee/ui/components": ["./libs/ui/src/components"],
+      "@pikzee/ui/components/*": ["./libs/ui/src/components/*"],
+
+      "@pikzee/ui/lib": ["./libs/ui/src/lib"],
+      "@pikzee/ui/lib/*": ["./libs/ui/src/lib/*"],
+
+      "@pikzee/ui/hooks": ["./libs/ui/src/hooks"],
+      "@pikzee/ui/hooks/*": ["./libs/ui/src/hooks/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

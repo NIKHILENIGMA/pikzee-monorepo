@@ -1,0 +1,54 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Build output
+dist
+build
+out
+out-tsc
+.next
+**/.next
+
+# Coverage and reports
+coverage
+**/coverage
+playwright-report
+test-results
+
+# Nx cache
+.nx/cache
+.nx/workspace-data
+
+# Package manager files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lockb
+
+# Environment and local config
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Generated files
+*.tsbuildinfo
+next-env.d.ts
+**/next-env.d.ts
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea
+*.sublime-workspace
+
+# Private/local project notes
+AGENTS.private.md
