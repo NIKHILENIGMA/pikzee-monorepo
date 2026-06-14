@@ -16,15 +16,13 @@
     "ignoreDeprecations": "5.0",
     "paths": {
       "@pikzee/ui": ["./libs/ui/src/index.ts"],
-
       "@pikzee/ui/components": ["./libs/ui/src/components"],
       "@pikzee/ui/components/*": ["./libs/ui/src/components/*"],
-
       "@pikzee/ui/lib": ["./libs/ui/src/lib"],
       "@pikzee/ui/lib/*": ["./libs/ui/src/lib/*"],
-
       "@pikzee/ui/hooks": ["./libs/ui/src/hooks"],
-      "@pikzee/ui/hooks/*": ["./libs/ui/src/hooks/*"]
+      "@pikzee/ui/hooks/*": ["./libs/ui/src/hooks/*"],
+      "@pikzee/shared-types": ["./libs/shared/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
