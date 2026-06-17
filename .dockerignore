@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.next/
+apps/web/.next/
+apps/api/dist/
+apps/worker/dist/
+tmp/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Git
+.git/
+.github/
+.gitignore
+
+# Local env files
+.env*.local
+.env

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  postgres:
+    ports:
+      - '5432:5432'
+
+  redis:
+    ports:
+      - '6379:6379'
+
+  # web:
+  #   # Build using dev config or standard node base to support hot reloading
+  #   command: pnpm nx dev web
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - /app/apps/web/.next
+  #   environment:
+  #     - NODE_ENV=development
+  #     - NEXT_PUBLIC_API_URL=http://localhost:3001
+
+  api:
+    command: pnpm nx serve api
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://pikzee:${DATABASE_PASSWORD:-secret}@postgres:5432/pikzee
+      - REDIS_URL=redis://redis:6379
+
+  # worker:
+  #   command: pnpm nx serve worker
+  #   ports:
+  #     - "3002:3002"
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - /app/environment:
+  #     - NODE_ENV=development
+  #     - DATABASE_URL=postgresql://pikzee:${DATABASE_PASSWORD:-secret}@postgres:5432/pikzee
+  #     - REDIS_URL=redis://redis:6379
+
+  # Disable nginx in local development
+  nginx:
+    entrypoint: ['echo', 'Nginx is disabled in local development']
+    ports: []
