@@ -146,10 +146,7 @@ export default [
     },
   },
   {
-    files: [
-      'apps/web/**/*.{ts,tsx,js,jsx}',
-      'libs/ui/**/*.{ts,tsx,js,jsx}',
-    ],
+    files: ['apps/web/**/*.{ts,tsx,js,jsx}', 'libs/ui/**/*.{ts,tsx,js,jsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
