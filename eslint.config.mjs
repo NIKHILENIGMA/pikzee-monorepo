@@ -185,4 +185,19 @@ export default [
       'no-console': 'off',
     },
   },
+  {
+    files: [
+      '**/*.service.ts',
+      '**/*.controller.ts',
+      '**/*.module.ts',
+      '**/*.provider.ts',
+      '**/*.guard.ts',
+      '**/*.interceptor.ts',
+      '**/*.pipe.ts',
+      '**/*.strategy.ts',
+    ],
+    rules: {
+      '@typescript-eslint/consistent-type-imports': 'off',
+    },
+  },
 ]

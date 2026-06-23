@@ -5,6 +5,6 @@ export default defineConfig({
   schema: './libs/shared/db/src/schema/index.ts',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgresql://pikzee:secret@host.docker.internal:5432/pikzee',
+    url: process.env.DATABASE_URL || 'postgresql://pikzee:secret@postgres:5432/pikzee',
   },
 })

@@ -1,1 +1,1 @@
-export * as users from './user.schema'
+export { users, CreateUserDto, User } from './user.schema'
