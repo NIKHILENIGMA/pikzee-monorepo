@@ -5,6 +5,7 @@ allowBuilds:
   '@nestjs/core': false
   '@parcel/watcher': false
   '@swc/core': false
+  esbuild: set this to true or false
   less: false
   msw: true
   nx: false

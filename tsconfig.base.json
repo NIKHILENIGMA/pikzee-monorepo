@@ -23,7 +23,8 @@
       "@pikzee/ui/hooks": ["./libs/ui/src/hooks"],
       "@pikzee/ui/hooks/*": ["./libs/ui/src/hooks/*"],
       "@pikzee/shared-types": ["./libs/shared/types/src/index.ts"],
-      "@pikzee/shared-config": ["./libs/shared/config/src/index.ts"]
+      "@pikzee/shared-config": ["./libs/shared/config/src/index.ts"],
+      "@pikzee/shared-db": ["./libs/shared/db/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
