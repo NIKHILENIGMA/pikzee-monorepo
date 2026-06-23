@@ -11,7 +11,7 @@
     }
   },
   "postCreateCommand": "sudo corepack enable && pnpm config set store-dir ~/.pnpm-store && pnpm install && pnpm prepare",
-  "forwardPorts": [3000, 4200, 4201, 9229],
+  "forwardPorts": [3000, 4200, 4201, 4983, 9229],
   "portsAttributes": {
     "3000": {
       "label": "API",
