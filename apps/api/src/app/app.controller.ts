@@ -1,4 +1,6 @@
-import { Controller, Get } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
+
+import type { CreateUserDto } from '@pikzee/shared-db'
 
 import type { AppService } from './app.service'
 
@@ -6,8 +8,13 @@ import type { AppService } from './app.service'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getData() {
-    return this.appService.getData()
+  @Get('users')
+  getUsers() {
+    return this.appService.getUsers()
+  }
+
+  @Post('users')
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.appService.createUser(createUserDto)
   }
 }
