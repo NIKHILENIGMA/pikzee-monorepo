@@ -1,1 +1,1 @@
-pnpm lint && pnpm format:check
+CI=true pnpm lint && CI=true pnpm format:check

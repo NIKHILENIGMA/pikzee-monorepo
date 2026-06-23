@@ -4,9 +4,13 @@
   "runArgs": ["--name", "pikzee"],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "moby": false
+    }
   },
-  "postCreateCommand": "corepack enable && pnpm config set store-dir ~/.pnpm-store && pnpm install && pnpm prepare",
+  "postCreateCommand": "sudo corepack enable && pnpm config set store-dir ~/.pnpm-store && pnpm install && pnpm prepare",
   "forwardPorts": [3000, 4200, 4201, 9229],
   "portsAttributes": {
     "3000": {
