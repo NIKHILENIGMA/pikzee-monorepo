@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common'
 
 import type { CreateUserDto } from '@pikzee/shared-db'
 
-import type { AppService } from './app.service'
+import { AppService } from './app.service'
 
 @Controller()
 export class AppController {
