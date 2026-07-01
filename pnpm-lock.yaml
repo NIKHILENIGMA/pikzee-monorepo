@@ -31,7 +31,7 @@ importers:
         version: 11.1.24(@nestjs/common@11.1.24(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@11.1.24)
       axios:
         specifier: ^1.16.1
-        version: 1.16.1
+        version: 1.16.1(debug@4.4.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -47,6 +47,9 @@ importers:
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.6)
+      nestjs-zod:
+        specifier: ^5.4.0
+        version: 5.4.0(@nestjs/common@11.1.24(reflect-metadata@0.1.14)(rxjs@7.8.2))(rxjs@7.8.2)(zod@4.4.3)
       next:
         specifier: ~16.1.6
         version: 16.1.7(@babel/core@7.29.7)(babel-plugin-macros@3.1.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(sass@1.100.0)
@@ -7925,6 +7928,17 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
+  nestjs-zod@5.4.0:
+    resolution: {integrity: sha512-dxVpy1fjfK4kp+ztK+7xQP46fpvZxkeR/jcEdIvEGh/2o71iwXuy/hrKOWSPhJ1nQXV4iBdHqMizndn2GTaXDg==}
+    peerDependencies:
+      '@nestjs/common': ^10.0.0 || ^11.0.0
+      '@nestjs/swagger': ^7.4.2 || ^8.0.0 || ^11.0.0
+      rxjs: ^7.0.0
+      zod: ^3.25.0 || ^4.0.0
+    peerDependenciesMeta:
+      '@nestjs/swagger':
+        optional: true
+
   next@16.1.7:
     resolution: {integrity: sha512-WM0L7WrSvKwoLegLYr6V+mz+RIofqQgVAfHhMp9a88ms0cFX8iX9ew+snpWlSBwpkURJOUdvCEt3uLl3NNzvWg==}
     engines: {node: '>=20.9.0'}
@@ -15592,7 +15606,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.16.1:
+  axios@1.16.1(debug@4.4.3):
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.3)
       form-data: 4.0.5
@@ -18876,6 +18890,13 @@ snapshots:
   negotiator@1.0.0: {}
 
   neo-async@2.6.2: {}
+
+  nestjs-zod@5.4.0(@nestjs/common@11.1.24(reflect-metadata@0.1.14)(rxjs@7.8.2))(rxjs@7.8.2)(zod@4.4.3):
+    dependencies:
+      '@nestjs/common': 11.1.24(reflect-metadata@0.1.14)(rxjs@7.8.2)
+      deepmerge: 4.3.1
+      rxjs: 7.8.2
+      zod: 4.4.3
 
   next@16.1.7(@babel/core@7.29.7)(babel-plugin-macros@3.1.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(sass@1.100.0):
     dependencies:

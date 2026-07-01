@@ -36,6 +36,12 @@ export class UsersService {
     })
   }
 
+  async findUserByClerkId(clerkId: string) {
+    return this.db.conn.query.users.findFirst({
+      where: eq(users.clerkId, clerkId),
+    })
+  }
+
   async findAllUsers() {
     return this.db.conn.select().from(users)
   }

@@ -9,6 +9,7 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
 import { UsersModule } from './users/users.module'
+import { WebhooksModule } from './webhooks/webhooks.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module'
     DbModule,
     AuthModule,
     UsersModule,
+    WebhooksModule,
   ],
   controllers: [AppController],
   providers: [

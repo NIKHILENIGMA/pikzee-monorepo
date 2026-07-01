@@ -3,9 +3,10 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Request } from 'express'
 
+import { UsersService } from '../../users/users.service'
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 
-export type AuthenticatedRequest = Request & { userId?: string }
+export type AuthenticatedRequest = Request & { user?: { userId: string; clerkId: string } }
 
 @Injectable()
 export class ClerkGuard implements CanActivate {
@@ -13,7 +14,10 @@ export class ClerkGuard implements CanActivate {
     secretKey: process.env.CLERK_SECRET_KEY,
   })
 
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    private readonly userService: UsersService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic: boolean = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -57,7 +61,14 @@ export class ClerkGuard implements CanActivate {
       })
 
       if (session.isAuthenticated) {
-        request.userId = session.toAuth().userId
+        const clerkId = session.toAuth().userId
+        const user = await this.userService.findUserByClerkId(clerkId)
+
+        if (!user) {
+          return false
+        }
+
+        request.user = { userId: user.id, clerkId: user.clerkId }
         return true
       }
       return false

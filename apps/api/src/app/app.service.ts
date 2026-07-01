@@ -1,7 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 
-import { users, DbService, CreateUserDto } from '@pikzee/shared-db'
+import { users, DbService } from '@pikzee/shared-db'
+import { CreateUserDto } from '@pikzee/shared-types'
 
 @Injectable()
 export class AppService {

@@ -3,10 +3,10 @@ import z from 'zod'
 export const UserSchema = z.object({
   id: z.uuid(),
   clerkId: z.string(),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
+  firstName: z.string().nullish(),
+  lastName: z.string().nullish(),
   email: z.email(),
-  avatarImage: z.url().optional(),
+  avatarImage: z.url().nullish(),
   createdAt: z.date(),
   updatedAt: z.date(),
 })
@@ -33,3 +33,9 @@ export const UpdateUserSchema = UserSchema.partial().omit({
  * UpdateUserDto type representing the structure of a user object for updates.
  */
 export type UpdateUserDto = z.infer<typeof UpdateUserSchema>
+
+export const UserResponseSchema = UserSchema.meta({
+  id: 'UserResponseSchema',
+})
+
+export type UserResponseDto = z.infer<typeof UserResponseSchema>
