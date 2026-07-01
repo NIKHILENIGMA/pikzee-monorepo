@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 
 import { DbService, users } from '@pikzee/shared-db'
-import { CreateUserDto } from '@pikzee/shared-types'
+import { CreateUserDto, UpdateUserDto } from '@pikzee/shared-types'
 
 @Injectable()
 export class UsersService {
@@ -13,15 +13,7 @@ export class UsersService {
     return user
   }
 
-  async updateFromClerk(
-    id: string,
-    data: {
-      email?: string
-      firstName?: string
-      lastName?: string
-      avatarImage?: string
-    },
-  ) {
+  async updateFromClerk(id: string, data: UpdateUserDto) {
     const [user] = await this.db.conn
       .update(users)
       .set({
@@ -38,13 +30,13 @@ export class UsersService {
     return user
   }
 
-  async findOne(id: string) {
+  async findUserById(id: string) {
     return this.db.conn.query.users.findFirst({
       where: eq(users.id, id),
     })
   }
 
-  async findAll() {
+  async findAllUsers() {
     return this.db.conn.select().from(users)
   }
 }
