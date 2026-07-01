@@ -1,27 +1,50 @@
 import { Injectable } from '@nestjs/common'
+import { eq } from 'drizzle-orm'
 
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
+import { DbService, users } from '@pikzee/shared-db'
+import { CreateUserDto } from '@pikzee/shared-types'
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user with name: ' + createUserDto
+  constructor(private readonly db: DbService) {}
+
+  async createFromClerk(data: CreateUserDto) {
+    const [user] = await this.db.conn.insert(users).values(data).returning()
+    return user
   }
 
-  findAll() {
-    return `This action returns all users`
+  async updateFromClerk(
+    id: string,
+    data: {
+      email?: string
+      firstName?: string
+      lastName?: string
+      avatarImage?: string
+    },
+  ) {
+    const [user] = await this.db.conn
+      .update(users)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, id))
+      .returning()
+    return user
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  async deleteFromClerk(id: string) {
+    const [user] = await this.db.conn.delete(users).where(eq(users.id, id)).returning()
+    return user
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user with name: ${updateUserDto}`
+  async findOne(id: string) {
+    return this.db.conn.query.users.findFirst({
+      where: eq(users.id, id),
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  async findAll() {
+    return this.db.conn.select().from(users)
   }
 }

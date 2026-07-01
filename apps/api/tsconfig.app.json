@@ -10,5 +10,5 @@
     "moduleResolution": "nodenext"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["../../libs/ui/**/*"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "../../libs/ui/**/*"]
 }
