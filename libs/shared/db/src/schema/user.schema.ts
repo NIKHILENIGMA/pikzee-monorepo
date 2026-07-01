@@ -1,9 +1,10 @@
-import { pgTable, varchar, timestamp, text } from 'drizzle-orm/pg-core'
+import { pgTable, varchar, timestamp, text, uuid } from 'drizzle-orm/pg-core'
 
 import type { InferSelectModel, InferInsertModel } from 'drizzle-orm/table'
 
 export const users = pgTable('users', {
-  id: varchar('id', { length: 100 }).notNull().primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
+  clerkId: uuid('clerk_id').notNull().unique(),
   firstName: varchar('first_name', { length: 100 }),
   lastName: varchar('last_name', { length: 100 }),
   email: varchar('email', { length: 255 }).notNull().unique(),

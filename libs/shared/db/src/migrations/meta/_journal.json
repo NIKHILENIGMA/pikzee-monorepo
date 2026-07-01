@@ -8,6 +8,13 @@
       "when": 1782193782424,
       "tag": "0000_added_user_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782913020192,
+      "tag": "0001_update_user_table",
+      "breakpoints": true
     }
   ]
 }
