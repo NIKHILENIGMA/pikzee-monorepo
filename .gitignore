@@ -55,8 +55,15 @@ Thumbs.db
 .next
 out
 
+# typescript build cache
+*.tsbuildinfo
+
 # Local/private project knowledge
 AGENTS.private.md
 
+# pnpm
 .pnpm-store
 .pnpm-store/
+
+# Clerk local development config
+**/.clerk/
