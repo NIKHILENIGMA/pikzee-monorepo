@@ -74,6 +74,7 @@
   "dependencies": {
     "@clerk/backend": "^3.8.4",
     "@clerk/nextjs": "^7.5.9",
+    "@hookform/resolvers": "^5.4.0",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.0",
@@ -91,6 +92,7 @@
     "radix-ui": "^1.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.80.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "shadcn": "^4.8.3",
