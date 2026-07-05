@@ -47,9 +47,13 @@ export const useSignInForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
       // Redirect or perform any other action upon successful sign-in
       if (signIn.status === 'complete') {
+        const searchParams =
+          typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+        const redirectUrl = searchParams?.get('redirect_url') || '/dashboard'
+        // Finalize the sign-in process and navigate to the redirect URL
         await signIn.finalize({
           navigate: async ({ decorateUrl }) => {
-            router.push(decorateUrl('/dashboard'))
+            router.push(decorateUrl(redirectUrl))
           },
         }) // Finalize the sign-in process
       }

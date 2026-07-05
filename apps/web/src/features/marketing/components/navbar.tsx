@@ -2,7 +2,7 @@
 
 import { useAuth } from '@clerk/nextjs'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { AuthDialog } from '../../auth'
 import { LogoutButton } from '../../auth/components/logout-button'
@@ -16,6 +16,24 @@ export function Navbar() {
     setAuthMode(mode)
     setIsAuthOpen(true)
   }
+
+  // Check for the "show-signin" query parameter on initial load and open the auth dialog if present
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      /**
+       * it will check for url `http://localhost:3000/?show-signin=true&redirect_url=/dashboard` if the `show-signin` query parameter is set to `true`, it will open the sign-in dialog and then remove the `show-signin` parameter from the URL while preserving any other query parameters (like `redirect_url`). This ensures that users are prompted to sign in when they access protected routes without being signed in, while also maintaining any intended redirection after signing in. so new url will be `http://localhost:3000/?redirect_url=/dashboard` after the sign-in dialog is opened.
+       */
+      if (params.get('show-signin') === 'true') {
+        openAuth('signin')
+        // Strip the show-signin parameter from the URL but keep other params (like redirect_url)
+        params.delete('show-signin')
+        const newQuery = params.toString()
+        const newUrl = `${window.location.pathname}${newQuery ? `?${newQuery}` : ''}`
+        window.history.replaceState({}, '', newUrl)
+      }
+    }
+  }, [])
 
   return (
     <>
