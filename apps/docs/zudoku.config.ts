@@ -16,6 +16,7 @@ const config: ZudokuConfig = {
       label: '🚀 Getting Started',
       items: [
         { type: 'doc', file: 'getting-started/index', label: 'Welcome' },
+        { type: 'doc', file: 'getting-started/todolist', label: 'Feature To-Do List' },
         { type: 'doc', file: 'getting-started/local-setup', label: 'Local Setup' },
         { type: 'doc', file: 'getting-started/commands', label: 'Commands' },
         { type: 'doc', file: 'getting-started/project-structure', label: 'Project Structure' },

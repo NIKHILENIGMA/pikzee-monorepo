@@ -35,13 +35,14 @@ pikzee-monorepo/
 
 ## Where to go next
 
-| I want to...                       | Go to                                                   |
-| ---------------------------------- | ------------------------------------------------------- |
-| Set up the project locally         | [Local Setup](/getting-started/local-setup)             |
-| See all CLI commands               | [Commands](/getting-started/commands)                   |
-| Understand the app structure       | [Project Structure](/getting-started/project-structure) |
-| Work on the frontend               | [Frontend Docs](/frontend)                              |
-| Work on the backend API            | [Backend Docs](/backend)                                |
-| Understand infra & deployment      | [Infrastructure](/infra)                                |
-| Check past architectural decisions | [Decisions](/decisions)                                 |
-| See recent progress                | [Dev Log](/devlog)                                      |
+| I want to...                         | Go to                                                   |
+| ------------------------------------ | ------------------------------------------------------- |
+| View features / implementation TODOs | [Feature To-Do List](/getting-started/todolist)         |
+| Set up the project locally           | [Local Setup](/getting-started/local-setup)             |
+| See all CLI commands                 | [Commands](/getting-started/commands)                   |
+| Understand the app structure         | [Project Structure](/getting-started/project-structure) |
+| Work on the frontend                 | [Frontend Docs](/frontend)                              |
+| Work on the backend API              | [Backend Docs](/backend)                                |
+| Understand infra & deployment        | [Infrastructure](/infra)                                |
+| Check past architectural decisions   | [Decisions](/decisions)                                 |
+| See recent progress                  | [Dev Log](/devlog)                                      |
