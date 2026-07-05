@@ -1,0 +1,27 @@
+{
+  "name": "docs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/docs",
+  "projectType": "application",
+  "tags": ["type:app", "scope:internal", "runtime:browser"],
+  "targets": {
+    "dev": {
+      "command": "zudoku dev --port 3001",
+      "options": {
+        "cwd": "apps/docs"
+      }
+    },
+    "build": {
+      "command": "zudoku build",
+      "options": {
+        "cwd": "apps/docs"
+      }
+    },
+    "preview": {
+      "command": "zudoku preview",
+      "options": {
+        "cwd": "apps/docs"
+      }
+    }
+  }
+}

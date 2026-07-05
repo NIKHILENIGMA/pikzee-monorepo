@@ -67,3 +67,5 @@ AGENTS.private.md
 
 # Clerk local development config
 **/.clerk/
+
+vite.config.*.timestamp*
