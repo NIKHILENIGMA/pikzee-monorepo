@@ -22,6 +22,13 @@
       "when": 1782919252171,
       "tag": "0002_fix_clerk_id_missed_match",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783353943691,
+      "tag": "0003_setup_workspace_and_members_schema",
+      "breakpoints": true
     }
   ]
 }
