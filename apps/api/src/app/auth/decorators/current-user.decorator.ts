@@ -1,19 +1,19 @@
-import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
+import { createParamDecorator, UnauthorizedException, type ExecutionContext } from '@nestjs/common'
 
 import { type AuthenticatedRequest } from '../guards/clerk-guard.guard'
 
 type CurrentUserKey = 'userId' | 'clerkId'
 
 export const CurrentUser = createParamDecorator(
-  (data: CurrentUserKey | undefined, ctx: ExecutionContext) => {
+  (data: CurrentUserKey, ctx: ExecutionContext): string | null => {
     const request = ctx.switchToHttp().getRequest<AuthenticatedRequest>()
     const user = request.user
+
+    // If the user is not authenticated, return null
     if (!user) {
-      return null
+      throw new UnauthorizedException('User is not authenticated')
     }
-    if (!data) {
-      return user
-    }
+
     return user[data] ?? null
   },
 )

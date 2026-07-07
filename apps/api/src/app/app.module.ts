@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
 import { UsersModule } from './users/users.module'
 import { WebhooksModule } from './webhooks/webhooks.module'
+import { WorkspaceModule } from './workspace/workspace.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { WebhooksModule } from './webhooks/webhooks.module'
     AuthModule,
     UsersModule,
     WebhooksModule,
+    WorkspaceModule,
   ],
   controllers: [AppController],
   providers: [
