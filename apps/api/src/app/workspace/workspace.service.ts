@@ -89,6 +89,22 @@ export class WorkspaceService {
     return this.db.conn.select().from(workspaces).where(eq(workspaces.slug, slug)).limit(1)
   }
 
+  async findWorkspacesByUserId(userId: string) {
+    return this.db.conn
+      .select({
+        id: workspaces.id,
+        name: workspaces.name,
+        slug: workspaces.slug,
+        logoUrl: workspaces.logoUrl,
+        ownerId: workspaces.ownerId,
+        createdAt: workspaces.createdAt,
+        updatedAt: workspaces.updatedAt,
+      })
+      .from(workspaces)
+      .innerJoin(workspaceMembers, eq(workspaces.id, workspaceMembers.workspaceId))
+      .where(eq(workspaceMembers.userId, userId))
+  }
+
   private async isSlugUnique(slug: string): Promise<boolean> {
     const existingWorkspace = await this.db.conn
       .select()

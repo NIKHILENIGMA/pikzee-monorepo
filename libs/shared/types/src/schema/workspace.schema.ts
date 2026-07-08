@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { roles } from '@pikzee/shared-db'
+export const roles = ['ADMIN', 'EDITOR', 'COMMENTER', 'VIEWER'] as const
 
 export const WorkspaceSchema = z.object({
   id: z.uuid({ message: 'Workspace ID must be a valid UUID' }),

@@ -31,6 +31,7 @@ export class ClerkGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>()
     const token = this.extractTokenFromRequest(request)
     if (!token) {
+      console.warn('[ClerkGuard] Authorization token missing or malformed')
       return false
     }
 
@@ -65,14 +66,19 @@ export class ClerkGuard implements CanActivate {
         const user = await this.userService.findUserByClerkId(clerkId)
 
         if (!user) {
+          console.warn(
+            `[ClerkGuard] User with clerkId "${clerkId}" not found in database. Ensure webhook synced it.`,
+          )
           return false
         }
 
         request.user = { userId: user.id, clerkId: user.clerkId }
         return true
       }
+      console.warn('[ClerkGuard] Session authentication failed:', session.message || session.reason)
       return false
-    } catch (_error) {
+    } catch (error) {
+      console.error('[ClerkGuard] Exception during authentication:', error)
       return false
     }
   }

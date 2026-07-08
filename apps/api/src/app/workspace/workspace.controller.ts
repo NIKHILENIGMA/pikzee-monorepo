@@ -25,6 +25,12 @@ export class WorkspaceController {
     return this.workspaceService.findAll()
   }
 
+  // Get workspaces belonging to the current user
+  @Get('mine')
+  async findMine(@CurrentUser('userId') userId: string) {
+    return this.workspaceService.findWorkspacesByUserId(userId)
+  }
+
   // Update an existing workspace
   @Patch(':workspaceId')
   async update(
@@ -50,5 +56,14 @@ export class WorkspaceController {
   @Get('slug/:slug')
   async findOneBySlug(@Param('slug') slug: string) {
     return this.workspaceService.findOneByWorkspaceSlug(slug)
+  }
+
+  // Invite members (stub)
+  @Post(':workspaceId/invitations')
+  async invite(
+    @Param('workspaceId') workspaceId: string,
+    @Body() inviteDto: { emails: string[]; role: string },
+  ) {
+    return { success: true, invited: inviteDto.emails }
   }
 }

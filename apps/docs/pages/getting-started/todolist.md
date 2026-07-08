@@ -34,10 +34,10 @@ This list tracks the development status of backend and frontend implementation f
     - [ ] Configure public vs protected route matchers in Next.js `middleware.ts`.
     - [ ] Setup auth layout guards in `(dashboard)` layout.
     - [ ] Handle redirect logic to prevent loops when signed-in users hit `/sign-in` or anonymous users hit dashboard routes.
-  - [ ] **Onboarding Wizard widget**:
-    - [ ] Build a multi-step onboarding wizard overlay for first-time users.
-    - [ ] Implement initial workspace and project creation steps inside the onboarding wizard.
-    - [ ] Enforce user redirection to `/onboarding` if they do not belong to any workspace.
+  - [x] **Onboarding Wizard widget**:
+    - [x] Build a multi-step onboarding wizard overlay for first-time users.
+    - [x] Implement initial workspace and project creation steps inside the onboarding wizard.
+    - [x] Enforce user redirection to `/onboarding` if they do not belong to any workspace.
   - [ ] **Password Reset (Forgot Password) Flow**:
     - [ ] Build a custom Forgot Password view (email input to request reset).
     - [ ] Implement password reset token request dispatch using Clerk SDK.
