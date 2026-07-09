@@ -1,23 +1,28 @@
 import { createClerkClient } from '@clerk/backend'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
-import { Request } from 'express'
+import { Request as ExpressRequest } from 'express'
 
 import { UsersService } from '../../users/users.service'
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 
-export type AuthenticatedRequest = Request & { user?: { userId: string; clerkId: string } }
+export type AuthenticatedRequest = ExpressRequest & { user?: { userId: string; clerkId: string } }
 
 @Injectable()
 export class ClerkGuard implements CanActivate {
-  private clerk = createClerkClient({
-    secretKey: process.env.CLERK_SECRET_KEY,
-  })
+  private clerk: ReturnType<typeof createClerkClient>
 
   constructor(
     private reflector: Reflector,
     private readonly userService: UsersService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.clerk = createClerkClient({
+      secretKey: this.configService.get<string>('CLERK_SECRET_KEY'),
+      publishableKey: this.configService.get<string>('CLERK_PUBLISHABLE_KEY'),
+    })
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic: boolean = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -58,7 +63,7 @@ export class ClerkGuard implements CanActivate {
       })
 
       const session = await this.clerk.authenticateRequest(fetchRequest, {
-        jwtKey: process.env.CLERK_JWT_KEY,
+        jwtKey: this.configService.get<string>('CLERK_JWT_KEY'),
       })
 
       if (session.isAuthenticated) {
@@ -83,7 +88,7 @@ export class ClerkGuard implements CanActivate {
     }
   }
 
-  private extractTokenFromRequest(request: Request): string | null {
+  private extractTokenFromRequest(request: ExpressRequest): string | null {
     const authHeader = request.headers['authorization'] || request.headers['Authorization']
     const headerString = Array.isArray(authHeader) ? authHeader[0] : authHeader
     const [type, token] = headerString?.split(' ') ?? []

@@ -8,6 +8,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
+import { validateApiEnv } from './config/env.validator'
 import { UsersModule } from './users/users.module'
 import { WebhooksModule } from './webhooks/webhooks.module'
 import { WorkspaceModule } from './workspace/workspace.module'
@@ -15,6 +16,8 @@ import { WorkspaceModule } from './workspace/workspace.module'
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: 'apps/api/.env',
+      validate: validateApiEnv,
       isGlobal: true,
     }),
     DbModule,
