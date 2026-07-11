@@ -1,45 +1,23 @@
-'use client'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 
-import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { getMyWorkspaces } from '../../../features/workspace/services/workspace-server'
 
-import { useApiClient } from '../../../lib/api-client'
+export default async function DashboardRouterPage() {
+  const { userId } = await auth()
 
-export default function DashboardRouterPage() {
-  const router = useRouter()
-  const apiClient = useApiClient()
-  const [error, setError] = useState<string>('')
+  // If the user is not authenticated, redirect to the home page
+  if (!userId) {
+    redirect('/')
+  }
+  // Fetch the user's workspaces from the server
+  const workspaces = await getMyWorkspaces()
 
-  useEffect(() => {
-    async function checkWorkspaces() {
-      try {
-        const res = await apiClient.get('/workspace/mine')
-        const workspaces = res.data
+  // If the user has no workspaces, redirect to onboarding
+  if (!workspaces || workspaces.length === 0) {
+    redirect('/onboarding?redirect=true')
+  }
 
-        if (workspaces && workspaces.length > 0) {
-          // Redirect to the first workspace dashboard
-          router.replace(`/${workspaces[0].slug}/dashboard`)
-        } else {
-          // No workspaces found, redirect to onboarding
-          router.replace('/onboarding')
-        }
-      } catch (err) {
-        console.error('Failed to load workspaces:', err)
-        setError('Failed to load workspaces. Redirecting to onboarding...')
-        setTimeout(() => {
-          router.replace('/onboarding')
-        }, 2000)
-      }
-    }
-
-    checkWorkspaces()
-  }, [apiClient, router])
-
-  return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center space-y-4">
-      <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
-      <p className="text-sm text-slate-400 font-medium">{error || 'Loading your workspace...'}</p>
-    </div>
-  )
+  // If the user has workspaces, redirect to the first workspace's dashboard
+  redirect(`/${workspaces[0].slug}/dashboard`)
 }

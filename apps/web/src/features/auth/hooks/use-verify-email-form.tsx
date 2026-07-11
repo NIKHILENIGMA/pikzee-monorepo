@@ -44,7 +44,7 @@ export const useVerifyEmailForm = ({ onSuccess }: UseVerifyEmailFormProps): UseV
       if (signUp.status === 'complete') {
         await signUp.finalize({
           navigate: async ({ decorateUrl }) => {
-            const url = decorateUrl('/onboarding')
+            const url = decorateUrl('/onboarding?redirect=true')
             router.push(url)
             onSuccess()
           },
