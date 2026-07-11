@@ -3,7 +3,6 @@ import type { ZudokuConfig } from 'zudoku'
 const config: ZudokuConfig = {
   site: {
     title: 'Pikzee Internal Docs',
-    description: 'Internal developer portal for the Pikzee monorepo',
     logo: {
       src: { light: '/logo-light.svg', dark: '/logo-dark.svg' },
       alt: 'Pikzee',
@@ -16,6 +15,7 @@ const config: ZudokuConfig = {
       label: '🚀 Getting Started',
       items: [
         { type: 'doc', file: 'getting-started/index', label: 'Welcome' },
+        { type: 'doc', file: 'getting-started/flow', label: 'Flow' },
         { type: 'doc', file: 'getting-started/todolist', label: 'Feature To-Do List' },
         { type: 'doc', file: 'getting-started/local-setup', label: 'Local Setup' },
         { type: 'doc', file: 'getting-started/commands', label: 'Commands' },
@@ -58,7 +58,6 @@ const config: ZudokuConfig = {
         { type: 'doc', file: 'packages/index', label: 'Packages Overview' },
         { type: 'doc', file: 'packages/shared-types', label: 'shared-types' },
         { type: 'doc', file: 'packages/shared-ui', label: 'shared-ui' },
-        { type: 'doc', file: 'packages/shared-config', label: 'shared-config' },
         { type: 'doc', file: 'packages/shared-utils', label: 'shared-utils' },
       ],
     },

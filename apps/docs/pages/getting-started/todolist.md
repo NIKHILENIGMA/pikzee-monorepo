@@ -29,15 +29,15 @@ This list tracks the development status of backend and frontend implementation f
     - [x] Build custom Sign-Up form UI overlay.
     - [x] Bind form validation state to `react-hook-form` and validation schemas.
     - [x] Implement user registration initialization using Clerk's `signUp.create()` method.
+  - [x] **Onboarding Wizard widget**:
+    - [x] Build a multi-step onboarding wizard overlay for first-time users.
+    - [x] Implement initial workspace and project creation steps inside the onboarding wizard.
+    - [x] Enforce user redirection to `/onboarding` if they do not belong to any workspace.
 - **Outstanding Tasks:**
   - [ ] **Protected Routes & Redirection Rules**:
     - [ ] Configure public vs protected route matchers in Next.js `middleware.ts`.
     - [ ] Setup auth layout guards in `(dashboard)` layout.
     - [ ] Handle redirect logic to prevent loops when signed-in users hit `/sign-in` or anonymous users hit dashboard routes.
-  - [x] **Onboarding Wizard widget**:
-    - [x] Build a multi-step onboarding wizard overlay for first-time users.
-    - [x] Implement initial workspace and project creation steps inside the onboarding wizard.
-    - [x] Enforce user redirection to `/onboarding` if they do not belong to any workspace.
   - [ ] **Password Reset (Forgot Password) Flow**:
     - [ ] Build a custom Forgot Password view (email input to request reset).
     - [ ] Implement password reset token request dispatch using Clerk SDK.
