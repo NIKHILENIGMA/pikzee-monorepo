@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 
 import { DbService, users } from '@pikzee/shared-db'
@@ -37,9 +37,13 @@ export class UsersService {
   }
 
   async findUserByClerkId(clerkId: string) {
-    return this.db.conn.query.users.findFirst({
-      where: eq(users.clerkId, clerkId),
-    })
+    const [userExist] = await this.db.conn.select().from(users).where(eq(users.clerkId, clerkId))
+
+    if (!userExist) {
+      throw new NotFoundException()
+    }
+
+    return userExist
   }
 
   async findAllUsers() {
