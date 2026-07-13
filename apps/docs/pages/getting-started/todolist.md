@@ -45,13 +45,13 @@ This list tracks the development status of backend and frontend implementation f
     - [x] Implement password reset token request dispatch using Clerk SDK.
     - [x] Create Forgot Password code verification & new password input UI.
     - [x] Submit verification and finalize password reset flow.
+  - [x] **Terms & Privacy Consent**:
+    - [x] Render required legal policy consent checkboxes inside the custom Sign-Up Dialog.
+    - [x] Link checkboxes to static legal policy routes.
 - **Outstanding Tasks:**
   - [ ] **Password Change Flow (Settings)**:
     - [ ] Create a "Security" settings panel inside user configurations.
     - [ ] Implement secure password update logic using Clerk's update APIs.
-  - [ ] **Terms & Privacy Consent**:
-    - [ ] Render required legal policy consent checkboxes inside the custom Sign-Up Dialog.
-    - [ ] Link checkboxes to static legal policy routes.
   - [ ] **User preferences endpoints**:
     - [ ] Create endpoints for user-related data not handled by Clerk (e.g., user theme preferences, default active workspace).
   - [ ] **Active Sessions Management**:

@@ -32,6 +32,7 @@ export const useSignUpForm = ({ onRequireVerification }: UseSignUpFormProps): Us
       lastName: '',
       email: '',
       password: '',
+      acceptTerms: false,
     },
   })
 

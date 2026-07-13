@@ -1,6 +1,7 @@
 'use client'
 
 import { CircleAlert, Eye, EyeClosed, Lock, Mail, User, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -14,6 +15,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
   InputGroupButton,
+  Checkbox,
 } from '@pikzee/ui'
 
 import { useSignUpForm } from '../hooks/use-signup-form'
@@ -169,6 +171,51 @@ export function SignUpForm({ onSwitchToSignIn, onRequireVerification }: SignUpFo
               )}
             />
           </FieldGroup>
+        </div>
+
+        <div className="my-3">
+          <Controller
+            name="acceptTerms"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <div className="flex items-center space-x-2 text-sm text-slate-400 select-none">
+                  <Checkbox
+                    id="acceptTerms"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="acceptTerms" className="cursor-pointer leading-none">
+                    I agree to the{' '}
+                    <Link
+                      href="/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-indigo-400 hover:text-indigo-300 font-semibold underline"
+                    >
+                      Terms of Service
+                    </Link>{' '}
+                    and{' '}
+                    <Link
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-indigo-400 hover:text-indigo-300 font-semibold underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </label>
+                </div>
+                {fieldState.invalid && (
+                  <span className="flex items-center gap-1 text-sm text-red-400 mt-1">
+                    <CircleAlert size={15} />
+                    <FieldError errors={[fieldState.error]} />
+                  </span>
+                )}
+              </Field>
+            )}
+          />
         </div>
 
         <Button

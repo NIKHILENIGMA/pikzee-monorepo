@@ -5,6 +5,9 @@ export const signUpSchema = z.object({
   lastName: z.string().min(2, { message: 'Last name must be at least 2 characters' }),
   email: z.email({ message: 'Invalid email address' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+  acceptTerms: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the terms and privacy policy',
+  }),
 })
 
 export type SignUpFormValues = z.infer<typeof signUpSchema>
