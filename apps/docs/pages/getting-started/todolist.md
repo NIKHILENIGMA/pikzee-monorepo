@@ -37,18 +37,18 @@ This list tracks the development status of backend and frontend implementation f
     - [x] Configure public vs protected route matchers in Next.js `middleware.ts`.
     - [x] Setup auth layout guards in `(dashboard)` layout.
     - [x] Handle redirect logic to prevent loops when signed-in users hit `/sign-in` or anonymous users hit dashboard routes.
+  - [x] **Email OTP Verification UI**:
+    - [x] Build custom 6-digit OTP code verification modal/screen for pending registrations.
+    - [x] Connect the input handler to submit verification via `signUp.attemptEmailAddressVerification({ code })`.
+  - [x] **Password Reset (Forgot Password) Flow**:
+    - [x] Build a custom Forgot Password view (email input to request reset).
+    - [x] Implement password reset token request dispatch using Clerk SDK.
+    - [x] Create Forgot Password code verification & new password input UI.
+    - [x] Submit verification and finalize password reset flow.
 - **Outstanding Tasks:**
-  - [ ] **Password Reset (Forgot Password) Flow**:
-    - [ ] Build a custom Forgot Password view (email input to request reset).
-    - [ ] Implement password reset token request dispatch using Clerk SDK.
-    - [ ] Create Forgot Password code verification & new password input UI.
-    - [ ] Submit verification and finalize password reset flow.
   - [ ] **Password Change Flow (Settings)**:
     - [ ] Create a "Security" settings panel inside user configurations.
     - [ ] Implement secure password update logic using Clerk's update APIs.
-  - [ ] **Email OTP Verification UI**:
-    - [ ] Build custom 6-digit OTP code verification modal/screen for pending registrations.
-    - [ ] Connect the input handler to submit verification via `signUp.attemptEmailAddressVerification({ code })`.
   - [ ] **Terms & Privacy Consent**:
     - [ ] Render required legal policy consent checkboxes inside the custom Sign-Up Dialog.
     - [ ] Link checkboxes to static legal policy routes.

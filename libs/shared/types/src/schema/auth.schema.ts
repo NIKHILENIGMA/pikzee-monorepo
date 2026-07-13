@@ -24,3 +24,27 @@ export const verifyOtpSchema = z.object({
 })
 
 export type VerifyOtpFormValues = z.infer<typeof verifyOtpSchema>
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+})
+
+export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
+
+export const forgotPasswordVerifySchema = z
+  .object({
+    code: z
+      .string()
+      .length(6, { message: 'Verification code must be exactly 6 digits' })
+      .regex(/^\d+$/, { message: 'Verification code must be numbers only' }),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: 'Password confirmation must be at least 6 characters' }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  })
+
+export type ForgotPasswordVerifyFormValues = z.infer<typeof forgotPasswordVerifySchema>

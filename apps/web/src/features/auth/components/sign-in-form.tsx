@@ -22,10 +22,11 @@ import { OAuthButton } from './oauth-button'
 
 interface SignInFormProps {
   onSwitchToSignUp: () => void
+  onForgotPassword: () => void
   onSuccess: () => void
 }
 
-export function SignInForm({ onSwitchToSignUp, onSuccess }: SignInFormProps) {
+export function SignInForm({ onSwitchToSignUp, onForgotPassword, onSuccess }: SignInFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const { handleSubmit, control, error, loading } = useSignInForm({ onSuccess })
 
@@ -77,7 +78,18 @@ export function SignInForm({ onSwitchToSignUp, onSuccess }: SignInFormProps) {
             control={control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <div className="flex justify-between items-center mb-1">
+                  <FieldLabel htmlFor="password" className="mb-0">
+                    Password
+                  </FieldLabel>
+                  <button
+                    type="button"
+                    onClick={onForgotPassword}
+                    className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition cursor-pointer"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
                 <InputGroup>
                   <InputGroupAddon align="inline-start">
                     <Lock className="text-slate-400" size={16} />
