@@ -15,3 +15,12 @@ export const signInSchema = z.object({
 })
 
 export type SignInFormValues = z.infer<typeof signInSchema>
+
+export const verifyOtpSchema = z.object({
+  otp: z
+    .string()
+    .length(6, { message: 'Invalid OTP' })
+    .regex(/^\d+$/, { message: 'OTP must be numbers only' }),
+})
+
+export type VerifyOtpFormValues = z.infer<typeof verifyOtpSchema>

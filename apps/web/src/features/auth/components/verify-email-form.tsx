@@ -1,4 +1,7 @@
 'use client'
+import { Controller } from 'react-hook-form'
+
+import { Button, InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@pikzee/ui'
 
 import { useVerifyEmailForm } from '../hooks/use-verify-email-form'
 
@@ -9,7 +12,7 @@ interface VerifyEmailFormProps {
 }
 
 export function VerifyEmailForm({ email, onSuccess, onBackToSignUp }: VerifyEmailFormProps) {
-  const { code, setCode, handleSubmit, error, loading } = useVerifyEmailForm({ onSuccess })
+  const { handleSubmit, control, formError, error, loading } = useVerifyEmailForm({ onSuccess })
 
   return (
     <div className="space-y-6">
@@ -24,27 +27,35 @@ export function VerifyEmailForm({ email, onSuccess, onBackToSignUp }: VerifyEmai
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1">Verification Code</label>
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            required
-            maxLength={6}
-            className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-center text-lg font-bold tracking-widest text-white placeholder-slate-600 focus:border-indigo-500 focus:outline-none"
-            placeholder="000000"
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-md bg-indigo-600 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition disabled:opacity-55"
-        >
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <Controller
+          name="otp"
+          control={control}
+          render={({ field }) => (
+            <InputOTP maxLength={6} value={field.value} onChange={field.onChange}>
+              <div className="flex justify-center items-center gap-3 w-full">
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} className="size-12 text-lg font-semibold" />
+                  <InputOTPSlot index={1} className="size-12 text-lg font-semibold" />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={2} className="size-12 text-lg font-semibold" />
+                  <InputOTPSlot index={3} className="size-12 text-lg font-semibold" />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={4} className="size-12 text-lg font-semibold" />
+                  <InputOTPSlot index={5} className="size-12 text-lg font-semibold" />
+                </InputOTPGroup>
+              </div>
+            </InputOTP>
+          )}
+        />
+        {formError !== undefined && <p className="text-sm text-destructive">{formError}</p>}
+        <Button type="submit" disabled={loading} className="w-full">
           {loading ? 'Verifying...' : 'Verify Email'}
-        </button>
+        </Button>
       </form>
 
       <div className="text-center text-sm text-slate-400">

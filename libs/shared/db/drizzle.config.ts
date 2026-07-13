@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
@@ -5,6 +6,6 @@ export default defineConfig({
   schema: './libs/shared/db/src/schema/index.ts',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgresql://pikzee:secret@postgres:5432/pikzee',
+    url: process.env.DATABASE_URL || 'postgresql://pikzee:secret@localhost:5432/pikzee',
   },
 })
