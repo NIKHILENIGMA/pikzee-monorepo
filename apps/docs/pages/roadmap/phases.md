@@ -1,15 +1,39 @@
 ---
-title: Feature To-Do List
-description: Check off backend and frontend feature implementation status.
+title: Development Phases & Roadmap
+description: Roadmap overview and current feature implementation checklist.
 ---
 
-# 📋 Feature To-Do List
+# 📍 Roadmap & Development Phases
 
-This list tracks the development status of backend and frontend implementation for the Pikzee monorepo. Use it to check off completed modules as we build.
+This page maps out the current development phases of the Pikzee project, tracking backend and frontend completeness.
 
 ---
 
-## Feature 1: Authentication
+## Current Roadmap Phase: **Phase 2 - Workspaces, DAM & Document Editor**
+
+We are currently focusing on finishing Workspace permissions, direct-to-S3 asset uploads, and integrating the collaborative rich-text TipTap editor.
+
+```mermaid
+gantt
+    title Pikzee Development Timeline
+    dateFormat  YYYY-MM-DD
+    section Phase 1
+    Authentication & Sign-up          :done, 2026-07-01, 2026-07-11
+    section Phase 2
+    Workspaces & Invitations          :active, 2026-07-12, 2026-07-22
+    S3 Asset Upload (DAM)            :active, 2026-07-15, 2026-07-25
+    TipTap Collaborative Editor      :active, 2026-07-18, 2026-08-01
+    section Phase 3
+    Social Publishing & OAuth         : 2026-08-02, 2026-08-15
+    Razorpay Payments                 : 2026-08-16, 2026-08-25
+    Settings & Polish                : 2026-08-26, 2026-09-05
+```
+
+---
+
+## 📋 Feature Implementation Status
+
+## Feature 1: Authentication (100% Completed)
 
 - **Completed Tasks:**
   - [x] **Clerk Webhook Synchronization**:
@@ -48,14 +72,8 @@ This list tracks the development status of backend and frontend implementation f
   - [x] **Terms & Privacy Consent**:
     - [x] Render required legal policy consent checkboxes inside the custom Sign-Up Dialog.
     - [x] Link checkboxes to static legal policy routes.
-- **Outstanding Tasks:**
-  - [ ] **Password Change Flow (Settings)**:
-    - [ ] Create a "Security" settings panel inside user configurations.
-    - [ ] Implement secure password update logic using Clerk's update APIs.
-  - [ ] **User preferences endpoints**:
-    - [ ] Create endpoints for user-related data not handled by Clerk (e.g., user theme preferences, default active workspace).
-  - [ ] **Active Sessions Management**:
-    - [ ] Allow users to view and revoke other active sessions from user settings.
+
+---
 
 ## Feature 2: Workspace & Members Management
 
@@ -75,6 +93,8 @@ This list tracks the development status of backend and frontend implementation f
     - [ ] Create NestJS authorization guard/decorators (e.g., `@RequirePermissions`) to secure API endpoints.
     - [ ] Implement frontend client-side route/action guards and conditional UI component rendering based on user role/permissions.
 
+---
+
 ## Feature 3: Project Management
 
 - **Completed Tasks:**
@@ -91,6 +111,8 @@ This list tracks the development status of backend and frontend implementation f
   - [ ] **Project Access Control & Security**:
     - [ ] Implement project-level access control rules and backend authorization guards.
 
+---
+
 ## Feature 4: Asset Management
 
 - **Completed Tasks:**
@@ -105,6 +127,8 @@ This list tracks the development status of backend and frontend implementation f
   - [ ] **Batch Operations & API Integration**:
     - [ ] Implement backend APIs for batch actions (move, copy, delete).
     - [ ] Connect frontend asset management screens to the backend asset APIs.
+
+---
 
 ## Feature 5: Upload Management
 
@@ -123,6 +147,8 @@ This list tracks the development status of backend and frontend implementation f
   - [ ] **Upload Completion & Asset DB Sync**:
     - [ ] Implement `POST /assets/upload/complete` to verify uploaded parts, finalize S3 multipart merges, and insert the asset record into the database.
     - [ ] Connect the frontend dropzone to call pre-signed URL APIs, execute upload requests to S3, and trigger finalization.
+
+---
 
 ## Feature 6: Document & Drafts Management
 
@@ -143,6 +169,8 @@ This list tracks the development status of backend and frontend implementation f
     - [ ] Design document table schema with `yjs_state` (binary/BYTEA), `content_json` (JSONB), and `content_text` (indexed text for full-text search).
     - [ ] Implement debounced (3s idle) and throttled (10s max) document autosave tasks on the Hocuspocus server.
 
+---
+
 ## Feature 7: Asset Upload to Social Platforms
 
 - **Completed Tasks:**
@@ -160,6 +188,8 @@ This list tracks the development status of backend and frontend implementation f
     - [ ] Configure background worker cron jobs in `apps/worker` to refresh social tokens before expiration.
     - [ ] Set up BullMQ worker consumers to stream media files from S3 to platform upload APIs and update database publishing statuses.
 
+---
+
 ## Feature 8: Payment
 
 - **Completed Tasks:**
@@ -172,6 +202,8 @@ This list tracks the development status of backend and frontend implementation f
   - [ ] **Billing & Payment Flows**:
     - [ ] Create a billing / payment settings UI.
     - [ ] Implement checkout and payment flows in the frontend.
+
+---
 
 ## Feature 9: Settings
 
