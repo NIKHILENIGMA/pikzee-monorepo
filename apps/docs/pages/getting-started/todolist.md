@@ -64,16 +64,29 @@ This list tracks the development status of backend and frontend implementation f
     - [x] Create, update, and retrieve workspaces in the backend (`workspace` module).
     - [x] Implement workspace switcher and creation UI on the frontend.
 - **Outstanding Tasks:**
-  - [ ] **Workspace Member Management**:
-    - [ ] Implement backend logic for retrieving workspace members and managing roles (`members` module).
-    - [ ] Build workspace members list and role/member management dialogs in the frontend.
-  - [ ] **Workspace Invitation Flow**:
-    - [ ] Implement backend invitation lifecycle including sending, accepting, and invalidating/expiring invites.
-    - [ ] Build frontend invitation forms, accept-invite page, and pending invitation tracking UI.
-  - [ ] **Role-Based Permissions & Authorization**:
-    - [ ] Define backend permissions mapped to workspace roles (OWNER, EDITOR, COMMENTOR, GUEST).
-    - [ ] Create NestJS authorization guard/decorators (e.g., `@RequirePermissions`) to secure API endpoints.
-    - [ ] Implement frontend client-side route/action guards and conditional UI component rendering based on user role/permissions.
+  - [ ] **Phase 1: Shared Setup & Configuration**:
+    - [ ] Define the `WorkspacePermission` enum in `@pikzee/shared-types`.
+    - [ ] Create the static `ROLE_PERMISSIONS` map matching roles (`ADMIN`, `EDITOR`, `COMMENTER`, `VIEWER`) to permissions in `@pikzee/shared-types`.
+  - [ ] **Phase 2: Authorization Module (`apps/api`)**:
+    - [ ] Create `@pikzee/auth` decorators: `@RequirePermissions()` and `@CurrentMember()`.
+    - [ ] Build the `PermissionResolver` service to handle role-to-permission mapping context.
+    - [ ] Implement `WorkspacePermissionsGuard` supporting request context extraction (route params or custom header).
+    - [ ] Wire up `AuthorizationModule` and exports to make guards globally available.
+  - [ ] **Phase 3: Members Module (`apps/api`)**:
+    - [ ] Generate NestJS `MembersModule` to isolate member actions from workspace metadata.
+    - [ ] Implement `GET /workspaces/:workspaceId/members` listing workspace memberships.
+    - [ ] Implement `PATCH /workspaces/:workspaceId/members/:memberId` (guarded: requires `workspace:invite` permission) to modify roles.
+    - [ ] Implement `DELETE /workspaces/:workspaceId/members/:memberId` (guarded: requires `workspace:invite` permission) to remove members.
+  - [ ] **Phase 4: Invitations Module (`apps/api`)**:
+    - [ ] Define database schema for `workspace_invitations` (token, email, role, status, expires_at) using Drizzle ORM.
+    - [ ] Create NestJS `InvitationsModule`.
+    - [ ] Implement `POST /workspaces/:workspaceId/invitations` to generate tokens, store pending records, and trigger email dispatch stubs.
+    - [ ] Implement `GET /invitations/:token` verifying token authenticity and validity.
+    - [ ] Implement `POST /invitations/:token/accept` creating `workspace_members` records and updating token status.
+  - [ ] **Phase 5: Frontend Component & Hook Integration (`apps/web`)**:
+    - [ ] Create `useWorkspaceAuth` hook extracting roles and computing permission lists from active workspace context.
+    - [ ] Implement `<PermissionGuard>` component to handle conditional visual rendering.
+    - [ ] Secure Dashboard, settings, and workspace panels using the client-side permission helper.
 
 ## Feature 3: Project Management
 
