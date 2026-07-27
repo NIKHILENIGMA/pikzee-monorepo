@@ -8,7 +8,10 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
+import { AuthorizationModule } from './authorization/authorization.module'
 import { validateApiEnv } from './config/env.validator'
+import { InvitationModule } from './invitation/invitation.module'
+import { MembersModule } from './members/members.module'
 import { UsersModule } from './users/users.module'
 import { WebhooksModule } from './webhooks/webhooks.module'
 import { WorkspaceModule } from './workspace/workspace.module'
@@ -25,6 +28,9 @@ import { WorkspaceModule } from './workspace/workspace.module'
     UsersModule,
     WebhooksModule,
     WorkspaceModule,
+    AuthorizationModule,
+    MembersModule,
+    InvitationModule,
   ],
   controllers: [AppController],
   providers: [
