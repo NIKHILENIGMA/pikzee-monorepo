@@ -10,5 +10,11 @@
     "moduleResolution": "nodenext"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "../../libs/ui/**/*"]
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "../../libs/ui/**/*",
+    "jest.config.ts",
+    "jest.config.cts"
+  ]
 }
