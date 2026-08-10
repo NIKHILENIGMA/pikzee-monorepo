@@ -29,41 +29,21 @@
 
 ### 3.2 Next.js & React (Frontend)
 
-- **App Router:** Default to the App Router (`app/` directory).
-- **Server Components:** Default to React Server Components (RSC). Only add the `'use client'` directive when strictly necessary (e.g., using state, effects, or DOM event listeners).
-- **Architecture:** Strictly adhere to the Feature-Sliced structure defined in `ARCHITECTURE.md`. Keep components small and pure where possible. All business logic, state management, and JS-related operations must be extracted and encapsulated inside the `hooks/` folder of the respective feature.
-- **No Class Components:** Never write React Class components; use Functional Components with Hooks exclusively.
-- **Strong Typing:** Always add proper TypeScript types/interfaces to component props and explicitly type return values for functions and hooks.
+- **Refer to [FRONTEND_RULES.md](./FRONTEND_RULES.md)** for comprehensive architectural, performance, and state management standards related to the Next.js frontend.
 
 ### 3.3 NestJS (Backend API)
 
-- Follow standard NestJS modular architecture (`Module`, `Controller`, `Service`).
-- Keep controllers thin (only handling HTTP routing and validation). Move all business logic to services.
-- Use standard NestJS decorators and pipes for validation and serialization.
-- Since we are using ZOD for body validation.
-- Always send a standard api response e.g.
-  ```json
-  {
-    "success": true,
-    "statusCode": 200,
-    "message": "Request processed successfully",
-    "data": {
-      "id": "usr_94821",
-      "name": "Jane Doe",
-      "email": "jane.doe@example.com",
-      "role": "admin"
-    },
-    "timestamp": "2026-07-28T11:08:42.125Z"
-  }
-  ```
-- Use a proper logging according to standard nestjs logging works.
-- Security checks to be clear what server has to deal and what has to avoid.
+- **Refer to [BACKEND_RULES.md](./BACKEND_RULES.md)** for comprehensive architectural, security, and scalability standards related to the NestJS backend.
 
 ### 3.4 Drizzle ORM & Database
 
 - Always define schemas clearly in the central database library.
 - Never write raw SQL unless Drizzle does not support the required query complexity (which is rare).
 - Ensure all database mutations are wrapped in transactions if they modify multiple tables.
+
+### 3.5 Security
+
+- **Refer to [SECURITY_RULES.md](./SECURITY_RULES.md)** for comprehensive security, authentication, and vulnerability prevention standards.
 
 ## 4. Git & Commits (If agent is managing version control)
 

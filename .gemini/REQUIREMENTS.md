@@ -874,12 +874,16 @@ const isOwner    = useHasRole('OWNER')
 
 #### Decisions Made
 
-| #              | Decision                                  | Choice                                          |
-| -------------- | ----------------------------------------- | ----------------------------------------------- |
-| Invite expiry  | Duration                                  | ✅ 7 days — standard protocol                   |
-| Email security | Must accepter's email match invite email? | ✅ YES — prevents token hijacking               |
-| Decline invite | Track declined invites in DB?             | ✅ NO — let it expire silently                  |
-| Re-invite      | Reuse token or generate new one?          | ✅ New token — old link invalidated immediately |
+| #              | Decision                                  | Choice                                           |
+| -------------- | ----------------------------------------- | ------------------------------------------------ |
+| Invite expiry  | Duration                                  | ✅ 7 days — standard protocol                    |
+| Email security | Must accepter's email match invite email? | ✅ YES — prevents token hijacking                |
+| Decline invite | Track declined invites in DB?             | ✅ NO — let it expire silently                   |
+| Re-invite      | Reuse token or generate new one?          | ✅ New token — old link invalidated immediately  |
+| Email delivery | Sync or Async?                            | ✅ Async (BullMQ) — scale & responsiveness       |
+| Email mismatch | User logged in with different email       | ✅ Custom UI prompt to "Sign out & switch"       |
+| Rate limit     | Prevent invite spam                       | ✅ Limit on POST /invites (e.g. 10/hr/workspace) |
+| UI Updates     | Pending invites list updates              | ✅ Optimistic (revoke) + SWR/Polling (accept)    |
 
 ---
 
