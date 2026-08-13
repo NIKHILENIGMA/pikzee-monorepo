@@ -1,8 +1,10 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 
+import { WorkspacePermission, WorkspaceRole } from '@pikzee/shared-types'
+
 import { MembersService } from '../../members/members.service'
-import { AuthorizationService, WorkspacePermission, WorkspaceRole } from '../authorization.service'
+import { AuthorizationService } from '../authorization.service'
 
 @Injectable()
 export class WorkspacePermissionGuard implements CanActivate {
@@ -34,6 +36,13 @@ export class WorkspacePermissionGuard implements CanActivate {
 
     if (!membership) {
       return false
+    }
+
+    request.membership = membership
+
+    const allowSelf = this.reflector.get<boolean>('allow_self', context.getHandler())
+    if (allowSelf && request.params?.memberId === membership.id) {
+      return true
     }
 
     const userPermissions = await this.resolver.resolvePermissions({
