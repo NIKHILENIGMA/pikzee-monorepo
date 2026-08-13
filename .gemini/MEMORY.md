@@ -6,8 +6,8 @@
 
 ## Last Updated
 
-**Date:** 2026-07-28
-**Session Focus:** Feature 2 — Workspace & Members Management (Phases 1–5)
+**Date:** 2026-08-13
+**Session Focus:** Feature 2 — Completed Members Module Backend API (Phase 3)
 
 ---
 
@@ -36,16 +36,23 @@
 
 #### 3. Members Module (`apps/api/src/app/members/`)
 
-- Created `members.controller.ts` — routes: `GET /workspaces/:workspaceId/members`, `PATCH /workspaces/:workspaceId/members/:memberId`, `DELETE /workspaces/:workspaceId/members/:memberId`
-- Guarded by `ClerkAuthGuard` + `WorkspacePermissionGuard` + `@RequirePermissions()`
-- **Controller bodies are empty TODOs** — for Human-AI Pairing Protocol
-- Updated `members.module.ts` — imports `AuthorizationModule` via `forwardRef()`, registers controller
+- **Fully implemented** `members.controller.ts` & `members.service.ts`.
+- Endpoints: `GET /workspaces/:workspaceId/members`, `PATCH /workspaces/:workspaceId/members/:memberId`, `DELETE /workspaces/:workspaceId/members/:memberId`
+- Service Methods Renamed for clarity: `createMember`, `updateMemberRole`, `removeMember`.
+- Integrated SQL `JOIN` with `users` table to fetch user details (name, email, avatar) dynamically without hitting Clerk API.
+- Comprehensive Google-style JSDoc comments detailing complex business logic rules (Admin hierarchies, Owner protection).
+- 100% test coverage updated in `members.controller.spec.ts` and `members.service.spec.ts`.
+- Updated `apps/docs/pages/features/members.md` with complete flow logic.
 
 #### 4. Invitation Module (`apps/api/src/app/invitation/`)
 
-- Created `invitation.service.ts` — empty stubs for `createInvitation`, `verifyToken`, `acceptInvitation(token, userId, authenticatedEmail)`
-- Created `invitation.controller.ts` — routes: `POST /workspaces/:workspaceId/invitations`, `GET /invitations/:token`, `POST /invitations/:token/accept`
-- Updated `invitation.module.ts` — imports `DbModule`, registers controller and service
+- Restructured `apps/docs/pages/features/invitation.md`:
+  - Standardized the API endpoint format to perfectly match `members.md`.
+  - Added the `GET /workspaces/:workspaceId/invitations` (List Pending Invitations) endpoint.
+  - Documented explicit UX logic for Revocation (tombstone soft-delete) and Acceptance flows.
+  - Fixed MDX parsing errors by safely converting HTML comments to JSX block comments.
+- **Product Architecture Agreed:** "Pattern A" (Direct-to-Workspace). Invited users bypass the onboarding wizard and are injected directly into the inviter's workspace. They will only create a personal workspace later if they explicitly choose to.
+- _Codebase Status:_ Empty service/controller stubs still exist (waiting for implementation next session).
 
 #### 5. Database Schema (`libs/shared/db/src/schema/`)
 
@@ -60,11 +67,14 @@
 
 ---
 
-### ✅ Edge Cases Agreed (via `/grill-me`)
+### ✅ Edge Cases Agreed & Implemented
 
 | Scenario                                      | Behaviour                |
 | --------------------------------------------- | ------------------------ |
 | Try to update/delete workspace `OWNER`        | `403 ForbiddenException` |
+| Same-role redundant update in members API     | `403 ForbiddenException` |
+| Admin kicks another Admin (non-owner)         | `403 ForbiddenException` |
+| Admin leaves voluntarily                      | Allowed (`@AllowSelf()`) |
 | Invite email with existing `PENDING` invite   | `409 ConflictException`  |
 | Invite email that is already an active member | `409 ConflictException`  |
 | Accept invite with wrong authenticated email  | `403 ForbiddenException` |
@@ -108,9 +118,6 @@ pnpm exec nx test api
 
 ### Backend (Human to implement — empty stubs exist)
 
-- `MembersController.getMembers()` → call `membersService.findMembersByWorkspaceId(workspaceId)`
-- `MembersController.updateMember()` → call `membersService.update(memberId, dto)` + **guard against updating OWNER**
-- `MembersController.removeMember()` → call `membersService.delete(memberId)` + **guard against removing OWNER**
 - `InvitationService.createInvitation()` → generate nanoid token, check for existing member/pending invite, insert DB record, trigger email stub
 - `InvitationService.verifyToken()` → query DB, validate `expiresAt > now()` and `status === 'PENDING'`
 - `InvitationService.acceptInvitation()` → verify token, check email match, insert `workspace_members`, update token to ACCEPTED

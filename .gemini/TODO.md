@@ -22,19 +22,19 @@
 ### Feature 2: Workspace & Members Management
 
 - **Completed Tasks:**
-  - [x] Workspace CRUD & Switcher (Backend & Frontend UI).
+  - [x] Workspace CRUD (Backend).
   - [x] Phase 1: Shared Setup (Permissions enum, `ROLE_PERMISSIONS`).
+  - [x] Phase 2: Authorization Module: `WorkspacePermissionsGuard` & Decorators.
 - **Outstanding Tasks (MVP 1):**
-  - [ ] **Phase 2: Authorization Module**: `WorkspacePermissionsGuard` & Decorators.
-  - [ ] **Phase 3: Members Module**: API for member management. Enforce rule: _Only Admin can change roles. No one can kick Admin._
-  - [ ] **Phase 4: Invitations Module**: Send invite emails via Resend, accept invite flow.
+  - [ ] **Workspace Switcher & CRUD UI**: Build the frontend UI for switching between and managing workspaces.
+  - [x] **Phase 3: Members Module**: API for member management. Enforce rule: _Only Admin can change roles. No one can kick Admin._ (Completed).
+  - [ ] **Phase 4: Invitations Module**: Send invite emails via Resend, accept invite flow. (Current state: Stubs exist).
   - [ ] **Free Plan Limits**: Enforce maximum of 2 members per workspace on the Free plan.
 
 ### Feature 3: Digital Asset Management (Folders & Uploads)
 
-- **Completed Tasks:**
-  - [x] Asset Display UI & File Upload Dropzone.
 - **Outstanding Tasks (MVP 1):**
+  - [ ] **Asset Display UI & File Upload Dropzone**: Build the frontend UI.
   - [ ] **Asset Backend Schema**: DB schema for assets and nested folders.
   - [ ] **Asset APIs**: Allow users to dump files into custom nested folder structures.
   - [ ] **S3 Upload System**: Pre-signed URL generation and chunked uploading completion API.
@@ -42,26 +42,23 @@
 
 ### Feature 4: Script Editor & AI
 
-- **Completed Tasks:**
-  - [x] Rich Text Editor Integration (TipTap basic blocks).
 - **Outstanding Tasks (MVP 1):**
+  - [ ] **Rich Text Editor Integration**: TipTap basic blocks and frontend UI.
   - [ ] **Editor Customizations**: Implement Slash commands (Heading, paragraph, code, quote, bullets, highlighting).
   - [ ] **AI Scripting**: `POST /ai/complete` endpoint.
   - [ ] **AI Limits**: Implement 10 gems limit per workspace (each AI call costs 2 gems).
 
 ### Feature 5: Publisher (YouTube)
 
-- **Completed Tasks:**
-  - [x] Social Uploader UI.
 - **Outstanding Tasks (MVP 1):**
+  - [ ] **Social Uploader UI**: Build the frontend publishing interface.
   - [ ] **YouTube OAuth 2.0 Integration**: Connect Google accounts for publishing.
   - [ ] **Publishing Queue**: BullMQ worker to stream files from S3 directly to YouTube API.
 
 ### Feature 6: Settings
 
-- **Completed Tasks:**
-  - [x] Settings Panels UI.
 - **Outstanding Tasks (MVP 1):**
+  - [ ] **Settings Panels UI**: Build the frontend UI for managing preferences.
   - [ ] **Settings API**: Implement backend logic to change name, password, email, and other preferences.
 
 ---
