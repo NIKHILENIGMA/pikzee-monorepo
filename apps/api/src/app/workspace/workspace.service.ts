@@ -105,6 +105,16 @@ export class WorkspaceService {
       .where(eq(workspaceMembers.userId, userId))
   }
 
+  async isUserOwnerOfWorkspace(userId: string, workspaceId: string): Promise<boolean> {
+    const [workspace] = await this.db.conn
+      .select()
+      .from(workspaces)
+      .where(and(eq(workspaces.id, workspaceId), eq(workspaces.ownerId, userId)))
+      .limit(1)
+
+    return !!workspace
+  }
+
   private async isSlugUnique(slug: string): Promise<boolean> {
     const existingWorkspace = await this.db.conn
       .select()
