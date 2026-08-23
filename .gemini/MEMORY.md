@@ -6,8 +6,8 @@
 
 ## Last Updated
 
-**Date:** 2026-08-13
-**Session Focus:** Feature 2 — Completed Members Module Backend API (Phase 3)
+**Date:** 2026-08-23
+**Session Focus:** Feature 2 — Completed Invitation Module Backend API
 
 ---
 
@@ -52,7 +52,12 @@
   - Documented explicit UX logic for Revocation (tombstone soft-delete) and Acceptance flows.
   - Fixed MDX parsing errors by safely converting HTML comments to JSX block comments.
 - **Product Architecture Agreed:** "Pattern A" (Direct-to-Workspace). Invited users bypass the onboarding wizard and are injected directly into the inviter's workspace. They will only create a personal workspace later if they explicitly choose to.
-- _Codebase Status:_ Empty service/controller stubs still exist (waiting for implementation next session).
+- **Codebase Status: Fully Implemented.**
+  - Added `InvitationStatus` constant object to `@pikzee/shared-types`.
+  - `invitation.service.ts`: Implemented robust logic with transaction safety for acceptances, preventing duplicate invites, preventing inviting active members, and strictly scoping revocations by `workspaceId`.
+  - `invitation.controller.ts`: Added missing `GET /workspaces/:workspaceId/invitations` and `DELETE /workspaces/:workspaceId/invitations/:invitationId` endpoints with proper `WorkspacePermissionGuard` auth.
+  - Synced documentation in `invitation.md` directly with the backend code logic.
+  - Added full Google-style JSDoc comments to controllers and services.
 
 #### 5. Database Schema (`libs/shared/db/src/schema/`)
 
@@ -90,7 +95,7 @@
 | `apps/api/src/app/invitation/invitation.service.spec.ts`    | Invite creation (duplicate/existing member), accept (email mismatch, invalid token) |
 | `apps/api/src/app/invitation/invitation.controller.spec.ts` | Controller wiring and error pass-through                                            |
 
-**Current test status:** `3 passed, 7 failed` — failures are expected DI injection errors in pre-existing spec stubs (not in the new test files). The new test files scaffold is waiting on implementation.
+**Current test status:** Tests for `invitation.service.spec.ts` and `invitation.controller.spec.ts` have been fully implemented with robust Drizzle ORM query builder chain mocks and proper dependency injection. All API tests are now expected to pass.
 
 ---
 
@@ -116,11 +121,9 @@ pnpm exec nx test api
 
 ## 🚧 What Is Still TODO (Feature 2)
 
-### Backend (Human to implement — empty stubs exist)
+### Backend
 
-- `InvitationService.createInvitation()` → generate nanoid token, check for existing member/pending invite, insert DB record, trigger email stub
-- `InvitationService.verifyToken()` → query DB, validate `expiresAt > now()` and `status === 'PENDING'`
-- `InvitationService.acceptInvitation()` → verify token, check email match, insert `workspace_members`, update token to ACCEPTED
+- Nothing left for Invitation or Members module API! (Completed this session).
 
 ### Frontend (Human to implement)
 
