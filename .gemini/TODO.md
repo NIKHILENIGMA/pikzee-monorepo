@@ -28,7 +28,7 @@
 - **Outstanding Tasks (MVP 1):**
   - [ ] **Workspace Switcher & CRUD UI**: Build the frontend UI for switching between and managing workspaces.
   - [x] **Phase 3: Members Module**: API for member management. Enforce rule: _Only Admin can change roles. No one can kick Admin._ (Completed).
-  - [ ] **Phase 4: Invitations Module**: Send invite emails via Resend, accept invite flow. (Current state: Stubs exist).
+  - [x] **Phase 4: Invitations Module**: Send invite emails via Resend, accept invite flow, list pending, revoke. (Completed).
   - [ ] **Free Plan Limits**: Enforce maximum of 2 members per workspace on the Free plan.
 
 ### Feature 3: Digital Asset Management (Folders & Uploads)
