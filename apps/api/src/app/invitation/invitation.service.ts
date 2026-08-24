@@ -8,16 +8,22 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
-import { Resend } from 'resend'
 
 import { DbService, users, workspaceInvitations, workspaceMembers } from '@pikzee/shared-db'
-import { InvitationStatus, WorkspaceRole } from '@pikzee/shared-types'
+import {
+  InvitationStatus,
+  NotificationChannelEnum,
+  NotificationEventEnum,
+  WorkspaceRole,
+} from '@pikzee/shared-types'
+
+import { NotificationService } from '../notification/notification.service'
 
 @Injectable()
 export class InvitationService {
   constructor(
     private readonly db: DbService,
-    private readonly resend: Resend,
+    private readonly notificationService: NotificationService,
   ) {}
 
   // ===========================================================================
@@ -43,6 +49,7 @@ export class InvitationService {
     email: string,
     role: WorkspaceRole,
     inviterId: string,
+    customMessage?: string,
   ) {
     // check if the user is already a member of the workspace
     const [existingMember] = await this.db.conn
@@ -90,8 +97,16 @@ export class InvitationService {
       status: InvitationStatus.PENDING,
     })
     // 3. Trigger email dispatch stub
-    await this.sendInvitationEmail(email, token)
-
+    await this.notificationService.notify({
+      recipient: email,
+      event: NotificationEventEnum.WORKSPACE_INVITATION,
+      channel: [NotificationChannelEnum.EMAIL],
+      meta: {
+        invitationLink: `https://yourapp.com/invitations/${token}`,
+        welcomeMessage: customMessage || 'You have been invited to join our workspace!',
+        token,
+      },
+    })
     return { token, expiresAt }
   }
 
@@ -244,14 +259,5 @@ export class InvitationService {
       token += alphabet[bytes[i] & 63]
     }
     return token
-  }
-
-  private async sendInvitationEmail(email: string, token: string) {
-    await this.resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'noreply@yourapp.com',
-      to: email,
-      subject: 'You are invited to join a workspace',
-      html: `<p>You have been invited to join a workspace. Click <a href="https://yourapp.com/invitations/${token}">here</a> to accept the invitation.</p>`,
-    })
   }
 }

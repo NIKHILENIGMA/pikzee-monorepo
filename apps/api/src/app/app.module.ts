@@ -12,6 +12,7 @@ import { AuthorizationModule } from './authorization/authorization.module'
 import { validateApiEnv } from './config/env.validator'
 import { InvitationModule } from './invitation/invitation.module'
 import { MembersModule } from './members/members.module'
+import { NotificationModule } from './notification/notification.module'
 import { UsersModule } from './users/users.module'
 import { WebhooksModule } from './webhooks/webhooks.module'
 import { WorkspaceModule } from './workspace/workspace.module'
@@ -31,6 +32,7 @@ import { WorkspaceModule } from './workspace/workspace.module'
     AuthorizationModule,
     MembersModule,
     InvitationModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

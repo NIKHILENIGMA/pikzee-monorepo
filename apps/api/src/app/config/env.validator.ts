@@ -9,6 +9,10 @@ export const apiEnvSchema = z.object({
   CLERK_WEBHOOK_SECRET: z.string().min(1, 'Clerk Webhook Secret is required'),
   CLERK_PUBLISHABLE_KEY: z.string().min(1, 'Clerk Publishable Key is required'),
   CLERK_JWT_KEY: z.string().optional(),
+  RESEND_API_KEY: z.string().min(1, 'Resend API Key is required'),
+  RESEND_FROM_EMAIL: z.email('Invalid Resend From Email').min(1, 'Resend From Email is required'),
+  RESEND_INVITE_TEMPLATE_ID: z.string().optional(),
+  RESEND_WELCOME_TEMPLATE_ID: z.string().optional(),
 })
 
 export type ApiEnv = z.infer<typeof apiEnvSchema>
