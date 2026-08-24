@@ -6,8 +6,8 @@
 
 ## Last Updated
 
-**Date:** 2026-08-23
-**Session Focus:** Feature 2 — Completed Invitation Module Backend API
+**Date:** 2026-08-24
+**Session Focus:** Architecture Refactor — Notification Module & Resend Integration
 
 ---
 
@@ -65,7 +65,23 @@
   - Columns: `id`, `workspaceId`, `email`, `token` (unique), `role`, `status` (PENDING/ACCEPTED/EXPIRED/REVOKED), `expiresAt`, `createdAt`, `updatedAt`
 - Exported from `libs/shared/db/src/schema/index.ts`
 
-#### 6. Frontend (`apps/web/src/features/workspace/`)
+#### 6. Notification Module (`apps/api/src/app/notification/`)
+
+- Abstracted all email logic out of individual modules to create a scalable, multi-channel notification system.
+- Designed `NotificationService` as a Facade/Dispatcher pattern that accepts a standard `NotificationPayload` and routes it to enabled channels via `Promise.allSettled`.
+- Implemented `EmailChannelProvider` integrating the Resend SDK.
+- Decided to use **Resend Dashboard Templates** (passing `template_id` and variables) instead of managing React Email in the monorepo for MVP speed.
+- Configured strong type-safety using explicit variable mapping in `EmailChannelProvider` via a `switch` statement over `NotificationEventEnum` to prevent sensitive data leaks.
+- Configured dependency injection utilizing `ConfigModule` and a custom factory for the `Resend` client.
+- Exported `NotificationService` from `NotificationModule` for cross-module usage.
+
+#### 7. `@pikzee/shared-types` — Notification Types
+
+- Defined `NotificationEventEnum` (`WORKSPACE_INVITATION`, `WELCOME_EMAIL`)
+- Defined `NotificationChannelEnum` (`EMAIL`, `SMS`, `IN_APP`, `PUSH_NOTIFICATION`)
+- Defined `NotificationPayload` interface enforcing strong contracts for sending notifications.
+
+#### 8. Frontend (`apps/web/src/features/workspace/`)
 
 - Created `hooks/useWorkspaceAuth.ts` — `hasPermission`, `hasAnyPermission`, `hasAllPermissions` helpers (role stub: 'VIEWER', to be wired to workspace context)
 - Created `components/PermissionGuard.tsx` — wraps children with permission check, accepts `requireAll` flag and `fallback` slot
@@ -147,6 +163,9 @@ pnpm exec nx test api
 | Members controller    | `apps/api/src/app/members/members.controller.ts`                     |
 | Invitation service    | `apps/api/src/app/invitation/invitation.service.ts`                  |
 | Invitation controller | `apps/api/src/app/invitation/invitation.controller.ts`               |
+| Notification service  | `apps/api/src/app/notification/notification.service.ts`              |
+| Email provider        | `apps/api/src/app/notification/providers/email.provider.ts`          |
+| Notification types    | `libs/shared/types/src/schema/notification.schema.ts`                |
 | Frontend hook         | `apps/web/src/features/workspace/hooks/useWorkspaceAuth.ts`          |
 | Frontend guard        | `apps/web/src/features/workspace/components/PermissionGuard.tsx`     |
 | API Jest config       | `apps/api/jest.config.cjs`                                           |
