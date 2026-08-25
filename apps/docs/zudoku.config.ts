@@ -50,6 +50,7 @@ const config: ZudokuConfig = {
             { type: 'doc', file: 'features/members', label: 'Members' },
             { type: 'doc', file: 'features/permissions', label: 'Roles & Permission' },
             { type: 'doc', file: 'features/projects', label: 'Projects' },
+            { type: 'doc', file: 'features/notification', label: 'Notification' },
           ],
         },
         { type: 'doc', file: 'features/authentication', label: '🔐 Authentication' },
