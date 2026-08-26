@@ -46,6 +46,7 @@ const config: ZudokuConfig = {
           type: 'category',
           label: '🏢 Workspace Overview',
           items: [
+            { type: 'doc', file: 'features/workspace', label: 'Workspace Core' },
             { type: 'doc', file: 'features/invitation', label: 'Invitation' },
             { type: 'doc', file: 'features/members', label: 'Members' },
             { type: 'doc', file: 'features/permissions', label: 'Roles & Permission' },
