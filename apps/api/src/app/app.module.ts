@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { APP_GUARD } from '@nestjs/core'
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { DbModule } from '@pikzee/shared-db'
 
@@ -9,6 +9,7 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
 import { AuthorizationModule } from './authorization/authorization.module'
+import { TransformInterceptor } from './common/interceptors/transform.interceptor'
 import { validateApiEnv } from './config/env.validator'
 import { InvitationModule } from './invitation/invitation.module'
 import { MembersModule } from './members/members.module'
@@ -40,6 +41,10 @@ import { WorkspaceModule } from './workspace/workspace.module'
     {
       provide: APP_GUARD,
       useClass: ClerkGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
     },
   ],
 })
