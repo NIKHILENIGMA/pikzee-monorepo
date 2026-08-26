@@ -1,6 +1,21 @@
-import { Body, Controller, Patch, Delete, Get, Post, Param } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Patch,
+  Delete,
+  Get,
+  Post,
+  Param,
+  HttpStatus,
+  HttpCode,
+  UseGuards,
+} from '@nestjs/common'
+
+import { WorkspacePermission } from '@pikzee/shared-types'
 
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
+import { RequirePermissions } from '../authorization/decorators/require-permissions.decorator'
+import { WorkspacePermissionGuard } from '../authorization/guard/workspace-permission.guard'
 
 import { CreateWorkspaceDto } from './dto/create-workspace.dto'
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto'
@@ -10,60 +25,96 @@ import { WorkspaceService } from './workspace.service'
 export class WorkspaceController {
   constructor(private readonly workspaceService: WorkspaceService) {}
 
-  // Create a new workspace
+  // ===========================================================================
+  // MUTATIONS (POST, PATCH, DELETE)
+  // ===========================================================================
+
+  /**
+   * Creates a new workspace.
+   * Required permission: None (Authenticated user)
+   * Note: Enforces MVP limit of 1 workspace per user.
+   */
   @Post()
-  async create(
+  @HttpCode(HttpStatus.OK)
+  async createWorkspace(
     @CurrentUser('userId') userId: string,
     @Body() createWorkspaceDto: CreateWorkspaceDto,
   ) {
-    return this.workspaceService.create(userId, createWorkspaceDto)
+    return this.workspaceService.createWorkspace(userId, createWorkspaceDto)
   }
 
-  // Get all workspaces
-  @Get()
-  async findAll() {
-    return this.workspaceService.findAll()
-  }
-
-  // Get workspaces belonging to the current user
-  @Get('mine')
-  async findMine(@CurrentUser('userId') userId: string) {
-    return this.workspaceService.findWorkspacesByUserId(userId)
-  }
-
-  // Update an existing workspace
+  /**
+   * Updates an existing workspace's general details (name, logo).
+   * Required permission: WORKSPACE_WRITE
+   */
   @Patch(':workspaceId')
-  async update(
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(WorkspacePermissionGuard)
+  @RequirePermissions(WorkspacePermission.WORKSPACE_WRITE, WorkspacePermission.WORKSPACE_READ)
+  async updateWorkspaceDetails(
     @Body() updateWorkspaceDto: UpdateWorkspaceDto,
     @Param('workspaceId') workspaceId: string,
   ) {
-    return this.workspaceService.update(workspaceId, updateWorkspaceDto)
+    return this.workspaceService.updateWorkspaceDetails(workspaceId, updateWorkspaceDto)
   }
 
-  // Delete a workspace
+  /**
+   * Deletes a workspace.
+   * Required permission: WORKSPACE_WRITE
+   */
   @Delete(':workspaceId')
-  async delete(@Param('workspaceId') workspaceId: string, @CurrentUser('userId') userId: string) {
-    return this.workspaceService.delete(workspaceId, userId)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(WorkspacePermissionGuard)
+  @RequirePermissions(WorkspacePermission.WORKSPACE_WRITE, WorkspacePermission.WORKSPACE_READ)
+  async deleteWorkspace(@Param('workspaceId') workspaceId: string) {
+    return this.workspaceService.deleteWorkspace(workspaceId)
   }
 
-  // Get a workspace by ID
-  @Get(':workspaceId')
-  async findOne(@Param('workspaceId') workspaceId: string) {
-    return this.workspaceService.findOneByWorkspaceId(workspaceId)
+  // ===========================================================================
+  // QUERIES (GET)
+  // ===========================================================================
+
+  /**
+   * Retrieves all active workspaces belonging to the current user.
+   * Required permission: None (Authenticated user)
+   */
+  @Get('mine')
+  @HttpCode(HttpStatus.OK)
+  async getCurrentUserWorkspaces(@CurrentUser('userId') userId: string) {
+    return this.workspaceService.getActiveWorkspacesForUser(userId)
   }
 
-  // Get a workspace by slug
+  /**
+   * Retrieves a workspace by its unique slug.
+   * Required permission: WORKSPACE_READ
+   */
   @Get('slug/:slug')
-  async findOneBySlug(@Param('slug') slug: string) {
-    return this.workspaceService.findOneByWorkspaceSlug(slug)
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(WorkspacePermissionGuard)
+  @RequirePermissions(WorkspacePermission.WORKSPACE_READ)
+  async getWorkspaceBySlug(@Param('slug') slug: string) {
+    return this.workspaceService.getWorkspaceBySlug(slug)
   }
 
-  // Invite members (stub)
-  @Post(':workspaceId/invitations')
-  async invite(
-    @Param('workspaceId') workspaceId: string,
-    @Body() inviteDto: { emails: string[]; role: string },
-  ) {
-    return { success: true, invited: inviteDto.emails }
+  /**
+   * Retrieves a workspace by its UUID.
+   * Required permission: WORKSPACE_READ
+   */
+  @Get(':workspaceId')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(WorkspacePermissionGuard)
+  @RequirePermissions(WorkspacePermission.WORKSPACE_READ)
+  async getWorkspaceById(@Param('workspaceId') workspaceId: string) {
+    return this.workspaceService.getWorkspaceById(workspaceId)
+  }
+
+  /**
+   * Retrieves all workspaces globally.
+   * Required permission: None (Should ideally be restricted to internal admin tools)
+   */
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async getAllWorkspaces() {
+    return this.workspaceService.getAllWorkspaces()
   }
 }

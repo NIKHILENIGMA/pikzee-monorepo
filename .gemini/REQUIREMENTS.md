@@ -69,6 +69,8 @@ This document provides a detailed overview of the Pikzee project's core features
 
 ### How Paying for a Plan Works
 
+> **🚀 MVP V1 Note:** For the initial MVP launch, a strict **1 workspace per user** limit will be enforced regardless of the active plan. The advanced "High-Water Mark" multi-workspace ownership capacity logic (detailed below) is slated for a post-MVP update.
+
 - Payment happens **inside a specific workspace's billing settings**
 - That workspace becomes Plus/Pro — other workspaces the user owns stay on Free
 - Paying for Plus on Workspace A unlocks **two things**:
@@ -156,14 +158,14 @@ workspace_usage  -- reset monthly via worker cron
 
 ### Enforcement Checkpoints in Code
 
-| Endpoint                   | Limit Checked                                              |
-| -------------------------- | ---------------------------------------------------------- |
-| `POST /uploads`            | `storage_bytes + file_size ≤ plan_storage_limit`           |
-| `POST /ai/complete`        | `ai_doc_requests < plan_ai_doc_limit`                      |
-| `POST /ai/transform-image` | `ai_image_requests < plan_ai_image_limit`                  |
-| `POST /invites`            | `member_count < plan_member_limit`                         |
-| `POST /publish`            | `platform ∈ plan_allowed_platforms`                        |
-| `POST /workspaces`         | `owned_workspaces_count < ownership_limit_for_user`        |
-| **All (app) routes**       | `workspace.status === 'active'` else show suspended screen |
+| Endpoint                   | Limit Checked                                                |
+| -------------------------- | ------------------------------------------------------------ |
+| `POST /uploads`            | `storage_bytes + file_size ≤ plan_storage_limit`             |
+| `POST /ai/complete`        | `ai_doc_requests < plan_ai_doc_limit`                        |
+| `POST /ai/transform-image` | `ai_image_requests < plan_ai_image_limit`                    |
+| `POST /invites`            | `member_count < plan_member_limit`                           |
+| `POST /publish`            | `platform ∈ plan_allowed_platforms`                          |
+| `POST /workspaces`         | `owned_workspaces_count < 1` (MVP: Hard limit of 1 per user) |
+| **All (app) routes**       | `workspace.status === 'active'` else show suspended screen   |
 
 ---

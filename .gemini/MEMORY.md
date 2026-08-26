@@ -6,8 +6,8 @@
 
 ## Last Updated
 
-**Date:** 2026-08-24
-**Session Focus:** Architecture Refactor — Notification Module & Resend Integration
+**Date:** 2026-08-26
+**Session Focus:** Workspace Module Refactor, Naming Conventions, & Security Audit
 
 ---
 
@@ -85,6 +85,20 @@
 
 - Created `hooks/useWorkspaceAuth.ts` — `hasPermission`, `hasAnyPermission`, `hasAllPermissions` helpers (role stub: 'VIEWER', to be wired to workspace context)
 - Created `components/PermissionGuard.tsx` — wraps children with permission check, accepts `requireAll` flag and `fallback` slot
+
+#### 9. Workspace Module Refactoring (`apps/api/src/app/workspace/`)
+
+- **Security & Business Logic Audit:** Fully audited `workspace.controller.ts` and `workspace.service.ts`.
+- **Naming Conventions:** Renamed CRUD methods to highly descriptive, professional standards (`createWorkspace`, `getActiveWorkspacesForUser`, `updateWorkspaceDetails`, etc.).
+- **Security Enhancements:**
+  - Integrated `WorkspacePermissionGuard` across all endpoints to enforce RBAC.
+  - Stripped `slug` from `UpdateWorkspaceDto` (via Zod omit) to guarantee link immutability at the schema validation layer.
+  - Optimized `UPDATE` and `DELETE` queries to bake `status = ACTIVE` directly into the `WHERE` clause, eliminating redundant selects.
+  - Eliminated redundant code blocks and logical contradictions between the Guard and the Service.
+- **Database (Drizzle) Fixes:**
+  - Manually patched migration `0005_workspace_status_added.sql` to include `CREATE TYPE ... AS ENUM`, fixing a known Drizzle Kit AST parsing bug for single-step enum assignments.
+  - Fixed a silent JavaScript bug where Drizzle's `.returning()` arrays evaluated as truthy in error handlers by correctly destructuring `const [workspace] = ...`.
+- **Documentation:** Formatted controllers and services with meticulous JSDoc comments detailing specific business rules and exceptions, matching the `members.service.ts` standard.
 
 ---
 

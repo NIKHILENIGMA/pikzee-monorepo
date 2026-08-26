@@ -22,7 +22,7 @@
 ### Feature 2: Workspace & Members Management
 
 - **Completed Tasks:**
-  - [x] Workspace CRUD (Backend).
+  - [x] Workspace CRUD (Backend) Refactoring & Security Audit.
   - [x] Phase 1: Shared Setup (Permissions enum, `ROLE_PERMISSIONS`).
   - [x] Phase 2: Authorization Module: `WorkspacePermissionsGuard` & Decorators.
 - **Outstanding Tasks (MVP 1):**

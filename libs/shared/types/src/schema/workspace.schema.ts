@@ -26,7 +26,14 @@ export const CreateWorkspaceSchema = WorkspaceSchema.omit({
 
 export type CreateWorkspaceDto = z.infer<typeof CreateWorkspaceSchema>
 
-export const UpdateWorkspaceSchema = WorkspaceSchema.partial()
+export const UpdateWorkspaceSchema = z.object({
+  name: z
+    .string()
+    .max(150, { message: 'Workspace name must not exceed 150 characters' })
+    .min(1, { message: 'Workspace name must be at least 1 character long' })
+    .optional(),
+  logoUrl: z.url({ message: 'Workspace logo URL is required' }).optional(),
+})
 
 export type UpdateWorkspaceDto = z.infer<typeof UpdateWorkspaceSchema>
 
@@ -66,3 +73,16 @@ export const WorkspaceMemberResponseSchema = WorkspaceMemberSchema.meta({
 })
 
 export type WorkspaceMemberResponseDto = z.infer<typeof WorkspaceMemberResponseSchema>
+
+export enum WorkspaceRole {
+  ADMIN = 'ADMIN',
+  EDITOR = 'EDITOR',
+  COMMENTER = 'COMMENTER',
+  VIEWER = 'VIEWER',
+}
+
+export enum WorkspaceStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  ARCHIVED = 'ARCHIVED',
+}

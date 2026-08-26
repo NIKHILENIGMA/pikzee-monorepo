@@ -38,7 +38,7 @@ export const workspaces = pgTable('workspaces', {
 
 ## 2. API Endpoints
 
-### 1. Create Workspace
+### 1. Create Workspace (`createWorkspace`)
 
 - **URL:** `/api/workspace`
 - **Method:** `POST`
@@ -51,7 +51,7 @@ export const workspaces = pgTable('workspaces', {
      - Insert into `workspace_members` with `role = 'OWNER'` (or `ADMIN`).
   4. **Response:** Returns the created workspace object.
 
-### 2. Get My Workspaces
+### 2. Get My Workspaces (`getCurrentUserWorkspaces`)
 
 - **URL:** `/api/workspace/mine`
 - **Method:** `GET`
@@ -60,7 +60,7 @@ export const workspaces = pgTable('workspaces', {
   1. Queries the database with an `INNER JOIN` on `workspace_members` where `userId` matches the current user.
   2. Returns an array of workspaces the user owns or is a member of.
 
-### 3. Update Workspace
+### 3. Update Workspace (`updateWorkspaceDetails`)
 
 - **URL:** `/api/workspace/:workspaceId`
 - **Method:** `PATCH`
@@ -70,7 +70,7 @@ export const workspaces = pgTable('workspaces', {
   2. Checks if the workspace exists.
   3. Updates the `workspaces` table and returns the modified object.
 
-### 4. Delete (Archive) Workspace
+### 4. Delete (Archive) Workspace (`deleteWorkspace`)
 
 - **URL:** `/api/workspace/:workspaceId`
 - **Method:** `DELETE`
@@ -80,7 +80,7 @@ export const workspaces = pgTable('workspaces', {
   2. Perform a "Soft Delete" by setting `status = 'archived'`. (Data is preserved for recovery or background cleanup, never hard deleted instantly unless explicitly requested).
   3. Returns a `200 OK` confirmation.
 
-### 5. Get Workspace by ID or Slug
+### 5. Get Workspace by ID or Slug (`getWorkspaceById` / `getWorkspaceBySlug`)
 
 - **URL:** `/api/workspace/:workspaceId` OR `/api/workspace/slug/:slug`
 - **Method:** `GET`
