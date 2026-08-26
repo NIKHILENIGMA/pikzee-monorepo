@@ -5,6 +5,9 @@ import { users } from './user.schema'
 export const roles = ['ADMIN', 'EDITOR', 'COMMENTER', 'VIEWER'] as const
 export const memberRoleEnum = pgEnum('member_role', roles)
 
+export const status = ['ACTIVE', 'INACTIVE', 'ARCHIVED'] as const
+export const workspaceStatusEnum = pgEnum('workspace_status', status)
+
 export const workspaces = pgTable('workspaces', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 150 }).notNull(),
@@ -13,6 +16,7 @@ export const workspaces = pgTable('workspaces', {
   ownerId: uuid('owner_id')
     .references(() => users.id)
     .notNull(),
+  status: workspaceStatusEnum('status').notNull().default('ACTIVE'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 })

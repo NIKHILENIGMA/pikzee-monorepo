@@ -29,6 +29,20 @@
       "when": 1783353943691,
       "tag": "0003_setup_workspace_and_members_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1787755899580,
+      "tag": "0004_invitation_schema_added",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1787756082481,
+      "tag": "0005_workspace_status_added",
+      "breakpoints": true
     }
   ]
 }
