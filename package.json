@@ -14,7 +14,10 @@
     "db:generate": "drizzle-kit generate --config=libs/shared/db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config=libs/shared/db/drizzle.config.ts",
     "db:push": "drizzle-kit push --config=libs/shared/db/drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --config=libs/shared/db/drizzle.config.ts"
+    "db:studio": "drizzle-kit studio --config=libs/shared/db/drizzle.config.ts",
+    "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d",
+    "docker:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
+    "docker:down": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down"
   },
   "private": true,
   "devDependencies": {
