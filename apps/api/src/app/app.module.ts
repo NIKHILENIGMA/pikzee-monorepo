@@ -4,8 +4,6 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { DbModule } from '@pikzee/shared-db'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ClerkGuard } from './auth/guards/clerk-guard.guard'
 import { AuthorizationModule } from './authorization/authorization.module'
@@ -35,9 +33,8 @@ import { WorkspaceModule } from './workspace/workspace.module'
     InvitationModule,
     NotificationModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: ClerkGuard,
