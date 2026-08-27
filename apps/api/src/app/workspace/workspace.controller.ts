@@ -114,7 +114,7 @@ export class WorkspaceController {
    */
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getAllWorkspaces() {
-    return this.workspaceService.getAllWorkspaces()
+  async getAllWorkspacesOfCurrentUser(@CurrentUser('userId') userId: string) {
+    return this.workspaceService.getAllWorkspacesOfCurrentUser(userId)
   }
 }

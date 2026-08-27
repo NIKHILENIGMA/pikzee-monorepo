@@ -187,13 +187,25 @@ export class WorkspaceService {
   }
 
   /**
-   * Retrieves a list of all workspaces globally.
+   * Retrieves a list of all workspaces owned by a specific user.
    * Used for internal system monitoring or admin panels.
    *
+   * @param userId The UUID of the user.
    * @returns A list of all workspaces.
    */
-  async getAllWorkspaces() {
-    return this.db.conn.select().from(workspaces)
+  async getAllWorkspacesOfCurrentUser(userId: string) {
+    const [currentUserWorkspaces] = await this.db.conn
+      .select({
+        id: workspaces.id,
+        name: workspaces.name,
+        slug: workspaces.slug,
+        logoUrl: workspaces.logoUrl,
+      })
+      .from(workspaces)
+      .where(and(eq(workspaces.ownerId, userId), eq(workspaces.status, WorkspaceStatus.ACTIVE)))
+      .orderBy(desc(workspaces.createdAt))
+
+    return currentUserWorkspaces
   }
 
   /**
