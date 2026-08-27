@@ -173,7 +173,12 @@ export class WorkspaceService {
    * @returns The workspace record.
    */
   async getWorkspaceById(workspaceId: string) {
-    return this.db.conn.select().from(workspaces).where(eq(workspaces.id, workspaceId)).limit(1)
+    const [workspace] = await this.db.conn
+      .select()
+      .from(workspaces)
+      .where(eq(workspaces.id, workspaceId))
+      .limit(1)
+    return workspace
   }
 
   /**
@@ -183,7 +188,12 @@ export class WorkspaceService {
    * @returns The workspace record.
    */
   async getWorkspaceBySlug(slug: string) {
-    return this.db.conn.select().from(workspaces).where(eq(workspaces.slug, slug)).limit(1)
+    const [workspace] = await this.db.conn
+      .select()
+      .from(workspaces)
+      .where(eq(workspaces.slug, slug))
+      .limit(1)
+    return workspace
   }
 
   /**

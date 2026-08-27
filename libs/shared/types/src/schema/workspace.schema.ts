@@ -74,13 +74,6 @@ export const WorkspaceMemberResponseSchema = WorkspaceMemberSchema.meta({
 
 export type WorkspaceMemberResponseDto = z.infer<typeof WorkspaceMemberResponseSchema>
 
-export enum WorkspaceRole {
-  ADMIN = 'ADMIN',
-  EDITOR = 'EDITOR',
-  COMMENTER = 'COMMENTER',
-  VIEWER = 'VIEWER',
-}
-
 export enum WorkspaceStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
