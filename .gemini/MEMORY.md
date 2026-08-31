@@ -6,8 +6,8 @@
 
 ## Last Updated
 
-**Date:** 2026-08-26
-**Session Focus:** Workspace Module Refactor, Naming Conventions, & Security Audit
+**Date:** 2026-08-27
+**Session Focus:** Workspace Module Refactor, Naming Conventions, Security Audit & Spec Test Rewrites
 
 ---
 
@@ -98,6 +98,7 @@
 - **Database (Drizzle) Fixes:**
   - Manually patched migration `0005_workspace_status_added.sql` to include `CREATE TYPE ... AS ENUM`, fixing a known Drizzle Kit AST parsing bug for single-step enum assignments.
   - Fixed a silent JavaScript bug where Drizzle's `.returning()` arrays evaluated as truthy in error handlers by correctly destructuring `const [workspace] = ...`.
+  - Fixed a similar silent array truthiness bug in `getWorkspaceById` and `getWorkspaceBySlug` by properly destructuring the result of `.limit(1)`. This resolves an issue where missing workspaces were throwing `ForbiddenException` instead of `NotFoundException`.
 - **Documentation:** Formatted controllers and services with meticulous JSDoc comments detailing specific business rules and exceptions, matching the `members.service.ts` standard.
 
 ---
@@ -124,8 +125,10 @@
 | `apps/api/src/app/members/members.controller.spec.ts`       | Member listing, role update, removal, and OWNER protection edge cases               |
 | `apps/api/src/app/invitation/invitation.service.spec.ts`    | Invite creation (duplicate/existing member), accept (email mismatch, invalid token) |
 | `apps/api/src/app/invitation/invitation.controller.spec.ts` | Controller wiring and error pass-through                                            |
+| `apps/api/src/app/workspace/workspace.controller.spec.ts`   | Controller method routing and dependency injection wiring                           |
+| `apps/api/src/app/workspace/workspace.service.spec.ts`      | Complex Drizzle Query Builder chain mocking for edge cases (Forbidden/NotFound)     |
 
-**Current test status:** Tests for `invitation.service.spec.ts` and `invitation.controller.spec.ts` have been fully implemented with robust Drizzle ORM query builder chain mocks and proper dependency injection. All API tests are now expected to pass.
+**Current test status:** Tests for `workspace`, `invitation`, and `members` modules have been fully implemented with robust Drizzle ORM query builder chain mocks and proper dependency injection. All API tests are now passing successfully.
 
 ---
 
@@ -162,7 +165,7 @@ pnpm exec nx test api
 
 ### Database
 
-- Run `pnpm db:generate` and `pnpm db:migrate` to apply the `workspace_invitations` table migration
+- (✅ Completed) Migrations for `workspace_invitations` table have been successfully generated and applied.
 
 ---
 
