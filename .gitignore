@@ -71,3 +71,6 @@ AGENTS.private.md
 **/.clerk/
 
 vite.config.*.timestamp*
+
+# Local Reference Data
+.reference/*
