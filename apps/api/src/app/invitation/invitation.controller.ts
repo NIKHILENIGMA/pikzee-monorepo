@@ -3,7 +3,7 @@ import { Controller, Post, Get, Param, Body, UseGuards, Delete } from '@nestjs/c
 import { WorkspacePermission, WorkspaceRole } from '@pikzee/shared-types'
 
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
-import { ClerkGuard } from '../auth/guards/clerk-guard.guard'
+import { Public } from '../auth/decorators/public.decorator'
 import { RequirePermissions } from '../authorization/decorators/require-permissions.decorator'
 import { WorkspacePermissionGuard } from '../authorization/guard/workspace-permission.guard'
 
@@ -18,7 +18,7 @@ export class InvitationController {
    * Required permission: WORKSPACE_INVITE
    */
   @Post('workspaces/:workspaceId/invitations')
-  @UseGuards(ClerkGuard, WorkspacePermissionGuard)
+  @UseGuards(WorkspacePermissionGuard)
   @RequirePermissions(WorkspacePermission.WORKSPACE_INVITE)
   async createInvitation(
     @Param('workspaceId') workspaceId: string,
@@ -34,7 +34,7 @@ export class InvitationController {
    * Required permission: WORKSPACE_INVITE
    */
   @Get('workspaces/:workspaceId/invitations')
-  @UseGuards(ClerkGuard, WorkspacePermissionGuard)
+  @UseGuards(WorkspacePermissionGuard)
   @RequirePermissions(WorkspacePermission.WORKSPACE_INVITE)
   async getPendingInvitations(@Param('workspaceId') workspaceId: string) {
     return this.invitationService.getPendingInvitations(workspaceId)
@@ -54,7 +54,7 @@ export class InvitationController {
    * Required permission: Valid Clerk Auth Token
    */
   @Post('invitations/:token/accept')
-  @UseGuards(ClerkGuard)
+  @Public()
   async acceptInvitation(
     @Param('token') token: string,
     @CurrentUser('userId') userId: string,
@@ -68,7 +68,7 @@ export class InvitationController {
    * Required permission: WORKSPACE_INVITE
    */
   @Delete('workspaces/:workspaceId/invitations/:invitationId')
-  @UseGuards(ClerkGuard, WorkspacePermissionGuard)
+  @UseGuards(WorkspacePermissionGuard)
   @RequirePermissions(WorkspacePermission.WORKSPACE_INVITE)
   async revokeInvitation(
     @Param('workspaceId') workspaceId: string,
